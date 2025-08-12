@@ -38,7 +38,7 @@ export default function Home() {
         </h1>
 
         {/* Introduction */}
-        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-8 mb-8 border border-cyan-400/20">
+        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-8 mb-8 border border-cyan-400/20 font-jameel">
           <h2 className="text-3xl font-bold mb-4 text-pink-500">تعارف</h2>
           <p className="text-lg leading-relaxed">
             "سن 2011 سے جاری مزاحمت و مقاومت اسلامی کے متعلق 24/7 براہ راست تازہ ترین سیاسی ، عسکری اور سفارتی پیشرفت و حقائق پر مبنی خبریں، پولنگ، تحقیقاتی و تجزیاتی تحریریں، ہائی کوالٹی ویڈیو فوٹیجز، تصاویر، حکمت عملی پر مبنی نقشے، آڈیو/ویڈیو نشید اور ترانے، روزانہ تازہ اخبارات اور کتابیں نشر کی جاتی ہیں"
@@ -47,15 +47,15 @@ export default function Home() {
 
         {/* Mission Section */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20">
+          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20 font-jameel">
             <h3 className="text-2xl font-bold mb-2 text-cyan-400">مقصد</h3>
             <p>ظہور امام مہدی ع کی تیاری</p>
           </div>
-          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20">
+          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20 font-jameel">
             <h3 className="text-2xl font-bold mb-2 text-cyan-400">مشن</h3>
             <p>حکمت ، قوت ، دیانت</p>
           </div>
-          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20">
+          <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20 font-jameel">
             <h3 className="text-2xl font-bold mb-2 text-cyan-400">اداریہ</h3>
             <p>مزمل حسن حاتمی - ایم فل بین الاقوامی تعلقات</p>
             <a href="tel:+923412786433" className="text-yellow-300 hover:text-yellow-200 block mt-2">
@@ -65,13 +65,13 @@ export default function Home() {
         </div>
 
         {/* Address */}
-        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 mb-8 border border-cyan-400/20">
+        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 mb-8 border border-cyan-400/20 font-jameel">
           <h3 className="text-2xl font-bold mb-2 text-pink-500">پتہ</h3>
           <p>سولجر بازار جمشید ٹاؤن کراچی شرقی پاکستان</p>
         </div>
 
         {/* Telegram */}
-        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 mb-8 border border-pink-500/20">
+        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 mb-8 border border-pink-500/20 font-jameel">
           <h3 className="text-2xl font-bold mb-4 text-cyan-400">ٹیلی گرام</h3>
           <a 
             href="https://t.me/eastfront_pk" 
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
 
         {/* WhatsApp Groups */}
-        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-cyan-400/20">
+        <div className="bg-black/70 backdrop-blur-sm rounded-xl p-6 border border-cyan-400/20 font-jameel">
           <h3 className="text-2xl font-bold mb-4 text-pink-500">واٹس اپ گروپس</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
