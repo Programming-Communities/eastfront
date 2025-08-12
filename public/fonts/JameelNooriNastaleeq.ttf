@@ -1,6 +1,16 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
 @font-face {
   font-family: 'JameelNooriNastaleeq';
   src: url('/fonts/JameelNooriNastaleeq.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+}
+
+.font-urdu {
+  font-family: 'JameelNooriNastaleeq', sans-serif;
+}
+
+body {
+  background-color: black;
+  color: white;
 }

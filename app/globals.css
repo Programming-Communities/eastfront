@@ -1,60 +1,13 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  /* Jameel Noori Nastaleeq font variable */
-  --font-jameel: 'JameelNooriNastaleeq', Arial, Helvetica, sans-serif;
-
-  /* Optional: fallback fonts */
-  --font-sans: 'YourSansFont', sans-serif;
-  --font-mono: 'YourMonoFont', monospace;
-}
-
-/* Dark mode colors */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* Font-face for Jameel Noori Nastaleeq */
-@font-face {
-  font-family: 'JameelNooriNastaleeq';
-  src: url('/fonts/JameelNooriNastaleeq.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap; /* Improves font loading UX */
-}
-
-/* Apply font and colors globally */
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-jameel);
-  margin: 0;
-  padding: 0;
-  /* Add base font size and line height if needed */
-  font-size: 16px;
-  line-height: 1.5;
+  @apply bg-black text-white;
+  text-shadow: 0 0 5px #ffffff, 0 0 20px #000, 0 0 30px #000;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Optional: If you want Tailwind to recognize this font for utilities like font-jameel, add this to tailwind.config.js:
-
-module.exports = {
-  theme: {
-    extend: {
-      fontFamily: {
-        jameel: ['JameelNooriNastaleeq', 'Arial', 'Helvetica', 'sans-serif'],
-      },
-    },
-  },
-  // other config
+canvas {
+  @apply fixed z-[-1] top-0;
 }
-
-Then use className="font-jameel" anywhere in your JSX or HTML.
-
-*/
-

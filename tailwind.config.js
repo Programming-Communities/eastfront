@@ -1,11 +1,9 @@
-// tailwind.config.js
 module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
-    extend: {
-      fontFamily: {
-        jameel: ['JameelNooriNastaleeq', 'Arial', 'Helvetica', 'sans-serif'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
