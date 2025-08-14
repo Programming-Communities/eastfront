@@ -2,12 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: 'Montserrat', 'Noto Nastaliq Urdu', sans-serif;
+  }
+}
+
 body {
   @apply bg-black text-white;
-  text-shadow: 0 0 5px #ffffff, 0 0 20px #000, 0 0 30px #000;
-  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,0,255,0.3);
+  overflow-x: hidden;
 }
 
 canvas {
-  @apply fixed z-[-1] top-0;
+  @apply fixed z-[-1] top-0 left-0 w-full h-full;
+}
+
+.eastfront-particle {
+  animation: float 3s ease-in-out infinite;
+  text-shadow: 0 0 10px currentColor;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.hover\:animate-bounce:hover {
+  animation: bounce 1s infinite;
 }

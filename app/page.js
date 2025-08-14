@@ -1,64 +1,103 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import './globals.css'
 
 export default function Home() {
-  useEffect(() => {
-    const initNeonCursor = async () => {
-      const { neonCursor } = await import('threejs-toys')
-      
-      // Enhanced cursor with EASTFRONT branding
-      const cursor = neonCursor({
-        el: document.getElementById('app'),
-        shaderPoints: 16,
-        curvePoints: 80,
-        curveLerp: 0.5,
-        radius1: 5,
-        radius2: 30,
-        velocityTreshold: 10,
-        sleepRadiusX: 100,
-        sleepRadiusY: 100,
-        sleepTimeCoefX: 0.0025,
-        sleepTimeCoefY: 0.0025,
-        // Custom particle colors matching EASTFRONT theme
-        particleColor: '#ff00ff',
-        trailColor: '#00ffff'
-      })
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
 
-      // EASTFRONT text particles effect
-      const createTextParticles = () => {
-        const text = 'EASTFRONT'
-        const particles = []
+  useEffect(() => {
+    // Mouse position tracking for title movement
+    const handleMouseMove = (e) => {
+      setPosition({
+        x: (e.clientX - window.innerWidth / 2) / 20,
+        y: (e.clientY - window.innerHeight / 2) / 20
+      })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+
+    // Neon cursor and text particles effect
+    const initNeonCursor = async () => {
+      try {
+        const { neonCursor } = await import('threejs-toys')
         
-        text.split('').forEach((char, i) => {
-          const particle = document.createElement('div')
-          particle.className = 'eastfront-particle'
-          particle.textContent = char
-          particle.style.color = `hsl(${i * 40}, 100%, 70%)`
-          document.body.appendChild(particle)
-          particles.push(particle)
+        const cursor = neonCursor({
+          el: document.getElementById('app'),
+          shaderPoints: 16,
+          curvePoints: 80,
+          curveLerp: 0.5,
+          radius1: 5,
+          radius2: 30,
+          velocityTreshold: 10,
+          sleepRadiusX: 100,
+          sleepRadiusY: 100,
+          sleepTimeCoefX: 0.0025,
+          sleepTimeCoefY: 0.0025,
+          particleColor: '#ff00ff',
+          trailColor: '#00ffff'
         })
 
-        const animate = () => {
-          particles.forEach((p, i) => {
-            const angle = Date.now() / 1000 + i
-            const x = Math.sin(angle) * 50
-            const y = Math.cos(angle) * 50
-            p.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
-            p.style.opacity = Math.abs(Math.sin(angle * 2))
+        const createTextParticles = () => {
+          const text = 'EASTFRONT'
+          const particles = []
+          const radius = 100
+          let mouseX = window.innerWidth / 2
+          let mouseY = window.innerHeight / 2
+          
+          const handleParticleMove = (e) => {
+            mouseX = e.clientX
+            mouseY = e.clientY
+          }
+          document.addEventListener('mousemove', handleParticleMove)
+
+          text.split('').forEach((char, i) => {
+            const particle = document.createElement('div')
+            particle.className = 'eastfront-particle'
+            particle.textContent = char
+            particle.style.color = `hsl(${i * 40}, 100%, 70%)`
+            particle.style.position = 'fixed'
+            particle.style.fontSize = '2rem'
+            particle.style.fontWeight = 'bold'
+            particle.style.pointerEvents = 'none'
+            particle.style.zIndex = '9999'
+            particle.style.transition = 'all 0.2s ease-out'
+            particle.style.textShadow = '0 0 10px currentColor'
+            document.body.appendChild(particle)
+            particles.push(particle)
           })
-          requestAnimationFrame(animate)
+
+          const animate = () => {
+            particles.forEach((p, i) => {
+              const angle = (Date.now() / 1000) + (i * (2 * Math.PI / particles.length))
+              const x = mouseX + Math.cos(angle) * radius
+              const y = mouseY + Math.sin(angle) * radius
+              
+              p.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
+              p.style.opacity = 0.8 + 0.2 * Math.sin(Date.now() / 200 + i)
+              
+              const rotationAngle = Math.atan2(y - mouseY, x - mouseX) * (180 / Math.PI)
+              p.style.transform += ` rotate(${rotationAngle + 90}deg)`
+            })
+            requestAnimationFrame(animate)
+          }
+          animate()
+
+          return () => {
+            particles.forEach(p => p.remove())
+            document.removeEventListener('mousemove', handleParticleMove)
+          }
         }
-        animate()
 
-        return () => particles.forEach(p => p.remove())
-      }
-
-      const cleanupText = createTextParticles()
-      
-      return () => {
-        if (cursor && cursor.destroy) cursor.destroy()
-        cleanupText()
+        const cleanupText = createTextParticles()
+        
+        return () => {
+          if (cursor && cursor.destroy) cursor.destroy()
+          cleanupText()
+          window.removeEventListener('mousemove', handleMouseMove)
+        }
+      } catch (error) {
+        console.error('Error initializing effects:', error)
       }
     }
     
@@ -67,7 +106,32 @@ export default function Home() {
 
   return (
     <div id="app" className="min-h-screen flex flex-col items-center py-10 px-4 overflow-auto touch-pan-up text-white text-center">
-      <h1 className="text-[60px] leading-[80px] my-5 uppercase">EASTFRONT</h1>
+      <Head>
+        <title>EASTFRONT - اسلامی مزاحمت و مقاومت</title>
+        <meta name="description" content="سن 2011 سے جاری مزاحمت و مقاومت اسلامی کے متعلق تازہ ترین خبریں اور تجزیے" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+      </Head>
+      
+      <h1 
+        className="text-[60px] leading-[80px] my-5 uppercase font-bold relative transition-transform duration-300"
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          textShadow: '0 0 10px #ff00ff, 0 0 20px #00ffff',
+          background: 'linear-gradient(45deg, #ff00ff, #00ffff)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          cursor: 'pointer'
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {isHovered ? (
+          <span className="animate-pulse">EASTFRONT</span>
+        ) : (
+          <span className="hover:animate-bounce">EASTFRONT</span>
+        )}
+      </h1>
       
       <div className="bg-black/70 rounded-xl p-8 max-w-4xl w-full my-5 shadow-lg shadow-pink-500/50 border border-white/20 text-right">
         <div className="mb-6 pb-6 border-b border-dashed border-white/20">
@@ -109,7 +173,7 @@ export default function Home() {
           <h3 className="text-[22px] font-bold text-pink-500 mb-4">واٹس اپ گروپس</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-                 "https://chat.whatsapp.com/GZJmBmUDH6TAWGs4suTI8R",
+              "https://chat.whatsapp.com/GZJmBmUDH6TAWGs4suTI8R",
               "https://chat.whatsapp.com/HRr6iYtcC0q7eWiHu72Nkw",
               "https://chat.whatsapp.com/C57s4pVkQL34rZcGKLcjew",
               "https://chat.whatsapp.com/EMtO1UNopT85FqvVoYqWch",
@@ -127,7 +191,6 @@ export default function Home() {
               "https://chat.whatsapp.com/E3SqPJ6ES4PDaRjQfD2XSh",
               "https://chat.whatsapp.com/GzraA5uELGpDDK9PKMNYul",
               "https://chat.whatsapp.com/GRsOxck2R8U3MVBOQoER3n"
-              // Add all your WhatsApp links here
             ].map((link, index) => (
               <a
                 key={index}
