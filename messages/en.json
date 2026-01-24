@@ -1,0 +1,38 @@
+{
+  "Hero": {
+    "title": "Islamic Resistance & Resistance",
+    "description": "Since 2011, 24/7 latest political, military and diplomatic developments and facts-based news, polling, investigative and analytical writings, high-quality video footage, images, strategy-based maps, audio/video anthems and songs, daily fresh newspapers and books are published",
+    "missionTitle": "Mission",
+    "missionDesc": "Wisdom, Strength, Integrity",
+    "visionTitle": "Vision",
+    "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
+    "booksTitle": "Digital Library",
+    "booksDesc": "Download free PDF books on Islamic Resistance"
+  },
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "books": "Books",
+    "contact": "Contact",
+    "news": "News"
+  },
+  "Books": {
+    "title": "Digital Library",
+    "description": "Download our collection of research books and publications",
+    "view": "View",
+    "download": "Download PDF",
+    "bookDescription": "Comprehensive analysis and research"
+  },
+  "WhatsApp": {
+    "joinGroups": "Join WhatsApp Groups"
+  },
+  "Footer": {
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "about": "About",
+    "books": "Books",
+    "contact": "Contact",
+    "mission": "Mission",
+    "vision": "Vision"
+  }
+}

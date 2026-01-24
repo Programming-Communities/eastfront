@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['drive.google.com'],
+  },
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
