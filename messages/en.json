@@ -1,14 +1,19 @@
 {
   "Hero": {
-    "title": "EASTFRONT PK - Islamic Resistance",
+    "title": "Islamic Resistance",
     "description": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
-    "subtitle": "Islamic Resistance & Resistance",
     "missionTitle": "Mission",
     "missionDesc": "Wisdom, Strength, Integrity",
     "visionTitle": "Vision",
     "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
     "booksTitle": "Digital Library",
-    "booksDesc": "Download free PDF books on Islamic Resistance"
+    "booksDesc": "Download free PDF books on Islamic Resistance",
+    "exploreResources": "Explore Resources",
+    "joinCommunity": "Join Community",
+    "yearsActive": "Years Active",
+    "publications": "Publications",
+    "whatsappGroups": "WhatsApp Groups",
+    "updates": "Updates"
   },
   "Navbar": {
     "home": "Home",

@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Shield, Target, Globe, BookOpen, Sparkles, Zap, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function HeroSection() {
   const t = useTranslations('Hero');
+  const common = useTranslations('Common');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -92,10 +94,10 @@ export default function HeroSection() {
           >
             <h1 className="text-5xl lg:text-7xl font-bold mb-6">
               <span className="block mb-2 bg-gradient-to-r from-red-400 via-orange-400 to-red-600 bg-clip-text text-transparent animate-gradient">
-                EASTFRONT PK
+                {common('title')}
               </span>
               <span className="block text-2xl lg:text-3xl text-gray-300 mt-4">
-                {t('title')}
+                {common('subtitle')}
               </span>
             </h1>
           </motion.div>
@@ -107,7 +109,7 @@ export default function HeroSection() {
             transition={{ delay: 0.3 }}
             className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
           >
-            {t('description')}
+            {common('description')}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -117,14 +119,20 @@ export default function HeroSection() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <button className="group px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 rounded-xl font-semibold text-white hover:from-red-700 hover:to-red-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/30 flex items-center gap-3">
+            <Link 
+              href="/books"
+              className="group px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 rounded-xl font-semibold text-white hover:from-red-700 hover:to-red-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/30 flex items-center justify-center gap-3"
+            >
               <Sparkles className="w-5 h-5 group-hover:rotate-180 transition-transform" />
-              Explore Resources
-            </button>
-            <button className="group px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center gap-3">
+              {t('exploreResources') || 'Explore Resources'}
+            </Link>
+            <Link 
+              href="/#whatsapp"
+              className="group px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3"
+            >
               <Users className="w-5 h-5" />
-              Join Community
-            </button>
+              {t('joinCommunity') || 'Join Community'}
+            </Link>
           </motion.div>
 
           {/* Features Grid */}
@@ -174,10 +182,10 @@ export default function HeroSection() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { value: '13+', label: 'Years Active', icon: Zap },
-                { value: '500+', label: 'Publications', icon: BookOpen },
-                { value: '18', label: 'WhatsApp Groups', icon: Users },
-                { value: '24/7', label: 'Updates', icon: Globe },
+                { value: '13+', label: t('yearsActive') || 'Years Active', icon: Zap },
+                { value: '500+', label: t('publications') || 'Publications', icon: BookOpen },
+                { value: '18', label: t('whatsappGroups') || 'WhatsApp Groups', icon: Users },
+                { value: '24/7', label: t('updates') || 'Updates', icon: Globe },
               ].map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-4xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent mb-2">

@@ -1,29 +1,35 @@
 {
   "Hero": {
-    "title": "فرونت شرق پاکستان - مقاومت اسلامی",
-    "description": "از سال 2011، پیشرفت‌های سیاسی، نظامی و دیپلماتیک 24/7",
-    "subtitle": "مقاومت و ایستادگی اسلامی",
+    "title": "مقاومت اسلامی",
+    "description": "از سال 2011، پوشش 24/7 اخبار، تحقیق و تحلیل مقاومت اسلامی",
     "missionTitle": "ماموریت",
     "missionDesc": "حکمت، قدرت، صداقت",
     "visionTitle": "چشم انداز",
     "visionDesc": "آماده‌سازی برای ظهور امام مهدی (عج)",
     "booksTitle": "کتابخانه دیجیتال",
-    "booksDesc": "دانلود رایگان کتاب‌های PDF در مورد مقاومت اسلامی"
+    "booksDesc": "دانلود رایگان کتاب‌های PDF در مورد مقاومت اسلامی",
+    "exploreResources": "کشف منابع",
+    "joinCommunity": "پیوستن به جامعه",
+    "yearsActive": "سال فعال",
+    "publications": "انتشارات",
+    "whatsappGroups": "گروه‌های واتساپ",
+    "updates": "به‌روزرسانی‌ها"
   },
   "Navbar": {
-    "home": "خانه",
+    "home": "صفحه اصلی",
     "about": "درباره ما",
     "books": "کتاب‌ها",
-    "contact": "تماس",
-    "news": "اخبار"
+    "whatsappGroups": "گروه‌های واتساپ",
+    "news": "اخبار",
+    "contact": "تماس با ما"
   },
   "About": {
-    "title": "درباره فرونت شرق پاکستان",
+    "title": "درباره فرانت شرقی پاکستان",
     "subtitle": "مقاومت اسلامی از سال 2011",
     "introduction": "معرفی",
     "purpose": "هدف",
     "mission": "ماموریت",
-    "editorial": "هیئت تحریریه",
+    "editorial": "تحریریه",
     "address": "آدرس",
     "telegram": "تلگرام",
     "whatsappGroups": "گروه‌های واتساپ",
@@ -31,14 +37,14 @@
   },
   "Contact": {
     "title": "تماس با ما",
-    "description": "برای آخرین به‌روزرسانی‌ها و بحث‌ها با ما تماس بگیرید",
+    "description": "برای دریافت آخرین به‌روزرسانی‌ها و بحث‌ها با ما تماس بگیرید",
     "addressTitle": "آدرس",
     "location": "کراچی، پاکستان",
     "sendMessage": "ارسال پیام",
     "name": "نام کامل",
     "namePlaceholder": "نام خود را وارد کنید",
     "email": "آدرس ایمیل",
-    "emailPlaceholder": "ایمیل شما",
+    "emailPlaceholder": "your@email.com",
     "message": "پیام",
     "messagePlaceholder": "پیام خود را اینجا تایپ کنید...",
     "sending": "در حال ارسال...",
@@ -46,10 +52,10 @@
   },
   "Books": {
     "title": "کتابخانه دیجیتال",
-    "description": "مجموعه کتاب‌ها و انتشارات تحقیقاتی ما را دانلود کنید",
+    "description": "مجموعه کتاب‌ها و انتشارات پژوهشی ما را دانلود کنید",
     "view": "مشاهده",
     "download": "دانلود PDF",
-    "bookDescription": "تحلیل و تحقیق جامع"
+    "bookDescription": "تحلیل و پژوهش جامع"
   },
   "WhatsApp": {
     "title": "گروه‌های واتساپ",
@@ -61,21 +67,37 @@
     "join": "عضویت",
     "message": "پیام",
     "total": "مجموع: 18 گروه واتساپ",
-    "community": "به جامعه در حال رشد ما بپیوندید",
-    "contactAdmin": "تماس با مدیر",
+    "community": "به جامعه رو به رشد ما بپیوندید",
+    "contactAdmin": "تماس با ادمین",
     "call": "تماس"
   },
   "Footer": {
     "quickLinks": "لینک‌های سریع",
-    "home": "خانه",
+    "home": "صفحه اصلی",
     "about": "درباره ما",
     "books": "کتاب‌ها",
-    "contact": "تماس",
+    "whatsappGroups": "گروه‌های واتساپ",
+    "news": "اخبار",
+    "contact": "تماس با ما",
+    "address": "آدرس",
+    "phone": "تلفن",
+    "email": "ایمیل",
     "mission": "ماموریت",
     "vision": "چشم انداز",
-    "address": "آدرس",
-    "telegram": "تلگرام",
-    "whatsapp": "واتساپ",
-    "copyright": "© 2024 فرونت شرق پاکستان. تمامی حقوق محفوظ است."
+    "copyright": "© {year} فرانت شرقی پاکستان. تمامی حقوق محفوظ است.",
+    "editorial": "تحریریه: مزمّل حسن حاتمی - کارشناسی ارشد روابط بین‌الملل",
+    "footerDescription": "از سال 2011، پوشش 24/7 اخبار، پژوهش و تحلیل مقاومت اسلامی"
+  },
+  "Common": {
+    "title": "فرانت شرقی پاکستان",
+    "subtitle": "مقاومت اسلامی",
+    "description": "از سال 2011، پوشش 24/7 اخبار، پژوهش و تحلیل مقاومت اسلامی",
+    "addressUrdu": "بازار سرباز، شهرک جمشید، کراچی شرقی، پاکستان",
+    "addressEnglish": "Soldier Bazaar, Jamshed Town, Karachi East, Pakistan",
+    "phone": "+92 341 2786433",
+    "email": "info@eastfront.pk",
+    "missionUrdu": "حکمت، قدرت، صداقت",
+    "visionUrdu": "آماده‌سازی برای ظهور امام مهدی (عج)",
+    "editorialUrdu": "مزمّل حسن حاتمی - کارشناسی ارشد روابط بین‌الملل"
   }
 }
