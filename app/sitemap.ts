@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { locales } from '@/i18n';
+import { locales } from '../lib/i18n'; // Changed from '../i18n'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://eastfront.pk';

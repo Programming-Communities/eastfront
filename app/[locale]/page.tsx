@@ -1,17 +1,17 @@
 import HeroSection from '@/components/sections/Hero';
 import BooksSection from '@/components/sections/BooksSection';
-import WhatsAppButton from '@/components/ui/WhatsAppButton';
-import ContactSection from '@/components/sections/ContactSection';
 import WhatsAppGroups from '@/components/ui/WhatsAppGroups';
+import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
       <BooksSection />
-      <WhatsAppGroups />
+      <div id="whatsapp">
+        <WhatsAppGroups />
+      </div>
       <ContactSection />
-      <WhatsAppButton />
     </>
   );
 }

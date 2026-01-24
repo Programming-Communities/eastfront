@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Menu, X, Globe, BookOpen, Home, Info, Newspaper, Phone } from 'lucide-react';
+import { Menu, X, Home, Info, BookOpen, Newspaper, Phone } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 
 export default function Header() {
   const t = useTranslations('Navbar');
@@ -20,16 +20,16 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+    <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">EF</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">EastFront PK</h1>
+              <h1 className="text-xl font-bold text-black dark:text-white">EastFront PK</h1>
               <p className="text-xs text-gray-600 dark:text-gray-400">Islamic Resistance</p>
             </div>
           </Link>
@@ -75,7 +75,7 @@ export default function Header() {
                   className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <item.icon className="w-5 h-5" />
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="font-medium text-black dark:text-white">
                     {item.name}
                   </span>
                 </Link>

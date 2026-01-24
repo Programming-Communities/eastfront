@@ -1,11 +1,10 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['drive.google.com', 'lh3.googleusercontent.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -22,12 +21,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true,
   },
-  eslint: {
-    // Temporarily disable during development
-    ignoreDuringBuilds: true,
-  },
   typescript: {
-    // Temporarily disable during development
     ignoreBuildErrors: true,
   },
 };

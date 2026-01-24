@@ -1,21 +1,25 @@
 {
   "Hero": {
-    "title": "Islamic Resistance & Resistance",
-    "description": "Since 2011, 24/7 latest political, military and diplomatic developments",
+    "title": "EASTFRONT PK - Islamic Resistance",
+    "description": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
+    "subtitle": "Islamic Resistance & Resistance",
     "missionTitle": "Mission",
     "missionDesc": "Wisdom, Strength, Integrity",
     "visionTitle": "Vision",
     "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
-    "booksTitle": "Digital Library"
+    "booksTitle": "Digital Library",
+    "booksDesc": "Download free PDF books on Islamic Resistance"
   },
   "Navbar": {
     "home": "Home",
     "about": "About",
     "books": "Books",
-    "contact": "Contact",
-    "news": "News"
+    "whatsappGroups": "WhatsApp Groups",
+    "news": "News",
+    "contact": "Contact"
   },
   "About": {
+    "title": "About EastFront PK",
     "subtitle": "Islamic Resistance since 2011",
     "introduction": "Introduction",
     "purpose": "Purpose",
@@ -23,7 +27,8 @@
     "editorial": "Editorial",
     "address": "Address",
     "telegram": "Telegram",
-    "whatsappGroups": "WhatsApp Groups"
+    "whatsappGroups": "WhatsApp Groups",
+    "description": "24/7 coverage of Islamic resistance developments"
   },
   "Contact": {
     "title": "Contact Us",
@@ -39,5 +44,55 @@
     "messagePlaceholder": "Type your message here...",
     "sending": "Sending...",
     "sendButton": "Send Message"
+  },
+  "Books": {
+    "title": "Digital Library",
+    "description": "Download our collection of research books and publications",
+    "view": "View",
+    "download": "Download PDF",
+    "bookDescription": "Comprehensive analysis and research"
+  },
+  "WhatsApp": {
+    "title": "WhatsApp Groups",
+    "description": "Join our active WhatsApp community",
+    "group": "Group",
+    "members": "Members",
+    "active": "Active",
+    "link": "Link",
+    "join": "Join",
+    "message": "Message",
+    "total": "Total: 18 WhatsApp Groups",
+    "community": "Join our growing community",
+    "contactAdmin": "Contact Admin",
+    "call": "Call"
+  },
+  "Footer": {
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "about": "About",
+    "books": "Books",
+    "whatsappGroups": "WhatsApp Groups",
+    "news": "News",
+    "contact": "Contact",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "mission": "Mission",
+    "vision": "Vision",
+    "copyright": "© {year} EastFront PK. All rights reserved.",
+    "editorial": "Editorial: Muzammil Hassan Hatmi - MPhil International Relations",
+    "footerDescription": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis"
+  },
+  "Common": {
+    "title": "EastFront PK",
+    "subtitle": "Islamic Resistance",
+    "description": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
+    "addressUrdu": "Soldier Bazaar, Jamshed Town, Karachi East, Pakistan",
+    "addressEnglish": "Soldier Bazaar, Jamshed Town, Karachi East, Pakistan",
+    "phone": "+92 341 2786433",
+    "email": "info@eastfront.pk",
+    "missionUrdu": "Wisdom, Strength, Integrity",
+    "visionUrdu": "Preparation for the Appearance of Imam Mahdi (AS)",
+    "editorialUrdu": "Muzammil Hassan Hatmi - MPhil International Relations"
   }
 }

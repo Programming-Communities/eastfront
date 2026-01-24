@@ -1,10 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { Metadata } from 'next';
 import { Users, Target, Shield, BookOpen, MapPin, Phone, Mail, Globe } from 'lucide-react';
-import Image from 'next/image';
+
+export const metadata: Metadata = {
+  title: 'About - EastFront PK',
+  description: 'Learn about EastFront PK Islamic Resistance movement',
+};
 
 const whatsappLinks = [
   "https://chat.whatsapp.com/GZJmBmUDH6TAWGs4suTI8R",
@@ -29,216 +30,157 @@ const whatsappLinks = [
 
 export default function AboutPage() {
   const t = useTranslations('About');
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({
-        x: (e.clientX - window.innerWidth / 2) / 20,
-        y: (e.clientY - window.innerHeight / 2) / 20
-      });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
+  const common = useTranslations('Common');
 
   return (
     <div className="min-h-screen py-10 px-4">
-      {/* Animated Title */}
-      <motion.div
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
-      >
-        <h1 
-          className="text-[60px] leading-[80px] my-5 uppercase font-bold relative"
-          style={{
-            transform: `translate(${position.x}px, ${position.y}px)`,
-            textShadow: '0 0 10px #ff00ff, 0 0 20px #00ffff',
-            background: 'linear-gradient(45deg, #ff00ff, #00ffff)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            color: 'transparent',
-          }}
-        >
-          EASTFRONT PK
+      {/* Title Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+          {t('title')}
         </h1>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
           {t('subtitle')}
         </p>
-      </motion.div>
+      </div>
 
       {/* Introduction Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="bg-black/70 rounded-xl p-8 max-w-6xl mx-auto my-10 shadow-lg shadow-pink-500/50 border border-white/20"
-      >
-        <div className="mb-8 pb-8 border-b border-dashed border-white/20">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 bg-pink-900/30 rounded-lg">
-              <BookOpen className="w-8 h-8 text-pink-400" />
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-8 mb-10 shadow-lg border border-gray-200 dark:border-gray-800">
+          <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                <BookOpen className="w-8 h-8 text-red-600 dark:text-red-400" />
+              </div>
+              <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">{t('introduction')}</h2>
             </div>
-            <h2 className="text-[32px] font-bold text-pink-500">{t('introduction')}</h2>
-          </div>
-          <p className="text-lg leading-relaxed text-gray-300 text-right font-urdu">
-            "سن 2011 سے جاری مزاحمت و مقاومت اسلامی کے متعلق 24/7 براہ راست تازہ ترین سیاسی ، عسکری اور سفارتی پیشرفت و حقائق پر مبنی خبریں، پولنگ، تحقیقاتی و تجزیاتی تحریریں، ہائی کوالٹی ویڈیو فوٹیجز، تصاویر، حکمت عملی پر مبنی نقشے، آڈیو/ویڈیو نشید اور ترانے، روزانہ تازہ اخبارات اور کتابیں نشر کی جاتی ہیں"
-          </p>
-        </div>
-
-        {/* Mission & Vision Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-gradient-to-br from-cyan-900/20 to-pink-900/20 p-6 rounded-xl border border-cyan-500/30"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <Target className="w-6 h-6 text-cyan-400" />
-              <h3 className="text-[22px] font-bold text-cyan-400">{t('purpose')}</h3>
-            </div>
-            <p className="text-lg text-gray-300 font-urdu">ظہور امام مہدی ع کی تیاری</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 p-6 rounded-xl border border-pink-500/30"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-6 h-6 text-pink-400" />
-              <h3 className="text-[22px] font-bold text-pink-400">{t('mission')}</h3>
-            </div>
-            <p className="text-lg text-gray-300 font-urdu">حکمت ، قوت ، دیانت</p>
-          </motion.div>
-        </div>
-
-        {/* Editorial Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 pb-8 border-b border-dashed border-white/20"
-        >
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 bg-yellow-900/30 rounded-lg">
-              <Users className="w-8 h-8 text-yellow-400" />
-            </div>
-            <h3 className="text-[28px] font-bold text-yellow-400">{t('editorial')}</h3>
-          </div>
-          <div className="bg-gray-900/50 p-6 rounded-xl">
-            <h4 className="text-xl font-bold mb-2 text-white">مزمل حسن حاتمی</h4>
-            <p className="text-gray-300 mb-4 font-urdu">
-              ایم فل بین الاقوامی تعلقات، موضوع پاک ایران (محقق دفاعی امور برائے مشرق وسطی)
+            <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 text-right font-urdu">
+              "سن 2011 سے جاری مزاحمت و مقاومت اسلامی کے متعلق 24/7 براہ راست تازہ ترین سیاسی ، عسکری اور سفارتی پیشرفت و حقائق پر مبنی خبریں، پولنگ، تحقیقاتی و تجزیاتی تحریریں، ہائی کوالٹی ویڈیو فوٹیجز، تصاویر، حکمت عملی پر مبنی نقشے، آڈیو/ویڈیو نشید اور ترانے، روزانہ تازہ اخبارات اور کتابیں نشر کی جاتی ہیں"
             </p>
-            <a href="tel:+923412786433" className="inline-flex items-center gap-2 text-yellow-300 hover:text-yellow-500 text-lg">
-              <Phone className="w-5 h-5" />
-              +92 341 2786433
+          </div>
+
+          {/* Mission & Vision Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-gradient-to-br from-blue-50 to-red-50 dark:from-blue-900/20 dark:to-red-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700">
+              <div className="flex items-center gap-3 mb-4">
+                <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400">{t('purpose')}</h3>
+              </div>
+              <p className="text-lg text-gray-700 dark:text-gray-300 font-urdu">
+                {common('visionUrdu')}
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-red-50 to-purple-50 dark:from-red-900/20 dark:to-purple-900/20 p-6 rounded-xl border border-red-200 dark:border-red-700">
+              <div className="flex items-center gap-3 mb-4">
+                <Shield className="w-6 h-6 text-red-600 dark:text-red-400" />
+                <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">{t('mission')}</h3>
+              </div>
+              <p className="text-lg text-gray-700 dark:text-gray-300 font-urdu">
+                {common('missionUrdu')}
+              </p>
+            </div>
+          </div>
+
+          {/* Editorial Section */}
+          <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+                <Users className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{t('editorial')}</h3>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+              <h4 className="text-2xl font-bold mb-2 text-black dark:text-white font-urdu">
+                {common('editorialUrdu')}
+              </h4>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                MPhil International Relations, Pakistan-Iran Relations (Defense Affairs Researcher for Middle East)
+              </p>
+              <a href="tel:+923412786433" className="inline-flex items-center gap-2 text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300 text-lg">
+                <Phone className="w-5 h-5" />
+                {common('phone')}
+              </a>
+            </div>
+          </div>
+
+          {/* Address Section */}
+          <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                <MapPin className="w-8 h-8 text-green-600 dark:text-green-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-green-600 dark:text-green-400">{t('address')}</h3>
+            </div>
+            <p className="text-lg text-gray-700 dark:text-gray-300 font-urdu">
+              {common('addressUrdu')}
+            </p>
+            <p className="text-lg text-gray-700 dark:text-gray-300 mt-2">
+              {common('addressEnglish')}
+            </p>
+          </div>
+
+          {/* Telegram Section */}
+          <div className="mb-8">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                <Globe className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-blue-600 dark:text-blue-400">{t('telegram')}</h3>
+            </div>
+            <a 
+              href="https://t.me/eastfront_pk" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+            >
+              <span className="text-2xl">📢</span>
+              <div>
+                <p className="text-lg font-semibold">t.me/eastfront_pk</p>
+                <p className="text-sm text-blue-100">Join our Telegram channel</p>
+              </div>
             </a>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Address Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mb-8 pb-8 border-b border-dashed border-white/20"
-        >
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 bg-green-900/30 rounded-lg">
-              <MapPin className="w-8 h-8 text-green-400" />
-            </div>
-            <h3 className="text-[28px] font-bold text-green-400">{t('address')}</h3>
-          </div>
-          <p className="text-lg text-gray-300 font-urdu">
-            سولجر بازار جمشید ٹاؤن کراچی شرقی پاکستان
-          </p>
-          <p className="text-lg text-gray-300 mt-2">
-            Soldier Bazaar, Jamshed Town, Karachi East, Pakistan
-          </p>
-        </motion.div>
-
-        {/* Telegram Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mb-8"
-        >
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 bg-blue-900/30 rounded-lg">
-              <Globe className="w-8 h-8 text-blue-400" />
-            </div>
-            <h3 className="text-[28px] font-bold text-blue-400">{t('telegram')}</h3>
-          </div>
-          <a 
-            href="https://t.me/eastfront_pk" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-4 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/50 rounded-xl transition-all hover:scale-105"
-          >
-            <span className="text-2xl">📢</span>
-            <div>
-              <p className="text-lg font-semibold text-white">t.me/eastfront_pk</p>
-              <p className="text-sm text-gray-400">Join our Telegram channel</p>
-            </div>
-          </a>
-        </motion.div>
-      </motion.div>
-
-      {/* WhatsApp Groups Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="max-w-6xl mx-auto my-10"
-      >
+        {/* WhatsApp Groups Section */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-900/30 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full mb-4">
             <span className="text-3xl">📱</span>
           </div>
-          <h2 className="text-[32px] font-bold text-green-400 mb-4">{t('whatsappGroups')}</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">{t('whatsappGroups')}</h2>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             18 Active WhatsApp groups for discussions, updates, and resources
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {whatsappLinks.map((link, index) => (
-            <motion.a
+            <a
               key={index}
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.05 }}
-              className="group bg-gradient-to-br from-green-900/20 to-emerald-900/20 p-4 rounded-xl border border-green-500/30 hover:border-green-400 transition-all"
+              className="group bg-white dark:bg-gray-900 p-4 rounded-xl border border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600 transition-all hover:shadow-lg"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center group-hover:bg-green-600/30 transition-colors">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-900/50 transition-colors">
                   <span className="text-lg">💬</span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-white group-hover:text-green-300 transition-colors">
+                  <h3 className="font-semibold text-black dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                     WhatsApp Group {index + 1}
                   </h3>
-                  <p className="text-sm text-gray-400 truncate">{link}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{link}</p>
                 </div>
-                <div className="px-3 py-1 bg-green-600/30 rounded-full text-xs font-medium text-green-300">
+                <div className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-xs font-medium text-green-700 dark:text-green-300">
                   Active
                 </div>
               </div>
-            </motion.a>
+            </a>
           ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
