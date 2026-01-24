@@ -23,9 +23,11 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
   eslint: {
+    // Temporarily disable during development
     ignoreDuringBuilds: true,
   },
   typescript: {
+    // Temporarily disable during development
     ignoreBuildErrors: true,
   },
 };

@@ -1,13 +1,12 @@
 {
   "Hero": {
     "title": "Islamic Resistance & Resistance",
-    "description": "Since 2011, 24/7 latest political, military and diplomatic developments and facts-based news, polling, investigative and analytical writings, high-quality video footage, images, strategy-based maps, audio/video anthems and songs, daily fresh newspapers and books are published",
+    "description": "Since 2011, 24/7 latest political, military and diplomatic developments",
     "missionTitle": "Mission",
     "missionDesc": "Wisdom, Strength, Integrity",
     "visionTitle": "Vision",
     "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
-    "booksTitle": "Digital Library",
-    "booksDesc": "Download free PDF books on Islamic Resistance"
+    "booksTitle": "Digital Library"
   },
   "Navbar": {
     "home": "Home",
@@ -16,23 +15,29 @@
     "contact": "Contact",
     "news": "News"
   },
-  "Books": {
-    "title": "Digital Library",
-    "description": "Download our collection of research books and publications",
-    "view": "View",
-    "download": "Download PDF",
-    "bookDescription": "Comprehensive analysis and research"
-  },
-  "WhatsApp": {
-    "joinGroups": "Join WhatsApp Groups"
-  },
-  "Footer": {
-    "quickLinks": "Quick Links",
-    "home": "Home",
-    "about": "About",
-    "books": "Books",
-    "contact": "Contact",
+  "About": {
+    "subtitle": "Islamic Resistance since 2011",
+    "introduction": "Introduction",
+    "purpose": "Purpose",
     "mission": "Mission",
-    "vision": "Vision"
+    "editorial": "Editorial",
+    "address": "Address",
+    "telegram": "Telegram",
+    "whatsappGroups": "WhatsApp Groups"
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "description": "Get in touch for latest updates and discussions",
+    "addressTitle": "Address",
+    "location": "Karachi, Pakistan",
+    "sendMessage": "Send Message",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "message": "Message",
+    "messagePlaceholder": "Type your message here...",
+    "sending": "Sending...",
+    "sendButton": "Send Message"
   }
 }
