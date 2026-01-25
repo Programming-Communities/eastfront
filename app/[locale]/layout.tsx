@@ -31,16 +31,13 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
-  // Await the params promise
   const { locale } = await params;
   const messages = await getMessages();
 
-  return (
-    <html lang={locale} dir={locale === 'ar' || locale === 'fa' ? 'rtl' : 'ltr'}>
-      <head>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className={`${inter.className} bg-white dark:bg-black text-black dark:text-white`}>
+ return (
+    <html lang={locale} dir={locale === 'ar' || locale === 'fa' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+      {/* ... head content ... */}
+      <body className={`${inter.className} bg-white text-black`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <div className="min-h-screen flex flex-col">

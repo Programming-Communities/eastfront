@@ -2,9 +2,9 @@
   "Hero": {
     "title": "Islamic Resistance",
     "description": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
-    "missionTitle": "Mission",
+    "missionTitle": "Our Mission",
     "missionDesc": "Wisdom, Strength, Integrity",
-    "visionTitle": "Vision",
+    "visionTitle": "Our Vision",
     "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
     "booksTitle": "Digital Library",
     "booksDesc": "Download free PDF books on Islamic Resistance",
@@ -21,7 +21,9 @@
     "books": "Books",
     "whatsappGroups": "WhatsApp Groups",
     "news": "News",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu"
   },
   "About": {
     "title": "About EastFront PK",
@@ -79,14 +81,18 @@
     "whatsappGroups": "WhatsApp Groups",
     "news": "News",
     "contact": "Contact",
-    "address": "Address",
-    "phone": "Phone",
-    "email": "Email",
-    "mission": "Mission",
-    "vision": "Vision",
+    "mission": "Our Mission",
+    "vision": "Our Vision",
     "copyright": "© {year} EastFront PK. All rights reserved.",
     "editorial": "Editorial: Muzammil Hassan Hatmi - MPhil International Relations",
-    "footerDescription": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis"
+    "footerDescription": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "language": "Language",
+    "version": "Version",
+    "defaultDescription": "Islamic Resistance Movement - Standing for justice and truth since 2011",
+    "defaultMission": "Struggle for truth and justice, promotion of Islamic resistance",
+    "defaultVision": "Building a free and strong Islamic society"
   },
   "Common": {
     "title": "EastFront PK",
@@ -98,6 +104,12 @@
     "email": "info@eastfront.pk",
     "missionUrdu": "Wisdom, Strength, Integrity",
     "visionUrdu": "Preparation for the Appearance of Imam Mahdi (AS)",
-    "editorialUrdu": "Muzammil Hassan Hatmi - MPhil International Relations"
+    "editorialUrdu": "Muzammil Hassan Hatmi - MPhil International Relations",
+    "logoAlt": "EastFront PK Logo",
+    "telegramLink": "https://t.me/eastfront_pk",
+    "whatsappLink": "https://wa.me/+923412786433",
+    "missionEnglish": "Wisdom, Strength, Integrity",
+    "visionEnglish": "Preparation for the Appearance of Imam Mahdi (AS)",
+    "editorialNote": "All content is curated and verified by our editorial team."
   }
 }
