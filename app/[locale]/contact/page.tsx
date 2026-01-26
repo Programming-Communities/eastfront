@@ -2,11 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { MapPin, Phone, Mail, Send, MessageSquare, Globe, Clock, User } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageSquare, Globe, Clock, User, Globe as GlobeIcon } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ContactSection() {
   const t = useTranslations('Contact');
+  const common = useTranslations('Common');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,60 +18,71 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // Dynamic contact info - all from translations
   const contactInfo = [
     {
       icon: MapPin,
-      title: t('addressTitle'),
-      content: t('location'),
-      subtitle: 'Karachi, Pakistan',
+      titleKey: 'addressTitle',
+      contentKey: 'location',
+      subtitleKey: 'addressSubtitle',
       color: 'text-red-500',
       bgColor: 'bg-red-500/10',
-      link: 'https://maps.google.com/?q=Soldier+Bazaar+Karachi+Pakistan'
+      linkKey: 'addressLink'
     },
     {
       icon: Phone,
-      title: t('phone'),
-      content: '+92 341 2786433',
-      subtitle: 'Available 24/7 for urgent matters',
+      titleKey: 'phone',
+      contentKey: 'phoneNumber',
+      subtitleKey: 'phoneSubtitle',
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
-      link: 'tel:+923412786433'
+      linkKey: 'phoneLink'
     },
     {
       icon: Mail,
-      title: t('email'),
-      content: 'info@eastfront.pk',
-      subtitle: 'Response within 24 hours',
+      titleKey: 'email',
+      contentKey: 'emailAddress',
+      subtitleKey: 'emailSubtitle',
       color: 'text-blue-500',
       bgColor: 'bg-blue-500/10',
-      link: 'mailto:info@eastfront.pk'
+      linkKey: 'emailLink'
     },
     {
       icon: Clock,
-      title: 'Working Hours',
-      content: '24/7 Support',
-      subtitle: 'Online assistance available',
+      titleKey: 'workingHoursTitle',
+      contentKey: 'workingHours',
+      subtitleKey: 'workingHoursSubtitle',
       color: 'text-amber-500',
       bgColor: 'bg-amber-500/10',
-      link: null
+      linkKey: null
     }
   ];
 
+  // Dynamic social links - all from translations
   const socialLinks = [
     {
-      name: 'Telegram Channel',
-      url: 'https://t.me/eastfront_pk',
+      nameKey: 'telegramName',
+      urlKey: 'telegramLink',
       icon: Send,
       color: 'bg-blue-600 hover:bg-blue-700',
-      description: 'Join for instant updates'
+      descriptionKey: 'telegramDescription'
     },
     {
-      name: 'WhatsApp Groups',
-      url: 'https://wa.me/+923412786433',
+      nameKey: 'whatsappName',
+      urlKey: 'whatsappLink',
       icon: MessageSquare,
       color: 'bg-green-600 hover:bg-green-700',
-      description: 'Connect with community'
+      descriptionKey: 'whatsappDescription'
     }
+  ];
+
+  // Dynamic form subjects - from translations
+  const subjectOptions = [
+    { value: 'general', labelKey: 'subjectGeneral' },
+    { value: 'support', labelKey: 'subjectSupport' },
+    { value: 'collaboration', labelKey: 'subjectCollaboration' },
+    { value: 'media', labelKey: 'subjectMedia' },
+    { value: 'other', labelKey: 'subjectOther' }
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -87,22 +99,31 @@ export default function ContactSection() {
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call - Replace with actual form submission
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Here you would typically send data to your backend
-      // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
+      // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
       
       setSubmitStatus('success');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       
-      // Reset success message after 5 seconds
+      // Reset success message
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (error) {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Helper function to get link URLs
+  const getLinkUrl = (linkKey: string | null) => {
+    if (!linkKey) return '#';
+    if (linkKey === 'addressLink') return `https://maps.google.com/?q=${encodeURIComponent(t('location'))}`;
+    if (linkKey === 'phoneLink') return `tel:${t('phoneNumber')}`;
+    if (linkKey === 'emailLink') return `mailto:${t('emailAddress')}`;
+    return t(linkKey as any);
   };
 
   return (
@@ -117,7 +138,7 @@ export default function ContactSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-6">
             <MessageSquare className="w-4 h-4 text-red-400" />
             <span className="text-sm font-medium text-red-400">
-              {t('getInTouch') || 'Get In Touch'}
+              {t('getInTouch')}
             </span>
           </div>
           
@@ -133,20 +154,20 @@ export default function ContactSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Information Cards */}
+          {/* Contact Information Cards - Dynamic */}
           <div className="lg:col-span-1 space-y-6">
             {contactInfo.map((info, index) => (
               <motion.a
                 key={index}
-                href={info.link || '#'}
-                target={info.link ? '_blank' : undefined}
-                rel={info.link ? 'noopener noreferrer' : undefined}
+                href={getLinkUrl(info.linkKey)}
+                target={info.linkKey ? '_blank' : undefined}
+                rel={info.linkKey ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ x: 5 }}
                 className={`block p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-red-300 dark:hover:border-red-800 transition-all duration-300 ${
-                  info.link ? 'cursor-pointer' : 'cursor-default'
+                  info.linkKey ? 'cursor-pointer' : 'cursor-default'
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -155,20 +176,20 @@ export default function ContactSection() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">
-                      {info.title}
+                      {t(info.titleKey)}
                     </h3>
                     <p className="text-gray-800 dark:text-gray-200 font-medium text-lg mb-1">
-                      {info.content}
+                      {t(info.contentKey)}
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {info.subtitle}
+                      {t(info.subtitleKey)}
                     </p>
                   </div>
                 </div>
               </motion.a>
             ))}
 
-            {/* Social Links */}
+            {/* Social Links - Dynamic */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -176,13 +197,13 @@ export default function ContactSection() {
               className="pt-6"
             >
               <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-4">
-                Connect With Us
+                {t('connectTitle')}
               </h3>
               <div className="space-y-3">
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
-                    href={social.url}
+                    href={t(social.urlKey as any)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center justify-between p-4 rounded-xl text-white transition-all duration-300 ${social.color} hover:shadow-lg`}
@@ -192,8 +213,8 @@ export default function ContactSection() {
                         <social.icon className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="font-medium">{social.name}</div>
-                        <div className="text-sm opacity-90">{social.description}</div>
+                        <div className="font-medium">{t(social.nameKey)}</div>
+                        <div className="text-sm opacity-90">{t(social.descriptionKey)}</div>
                       </div>
                     </div>
                     <Send className="w-4 h-4" />
@@ -219,13 +240,13 @@ export default function ContactSection() {
                     {t('sendMessage')}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Fill out the form below and we'll get back to you soon
+                    {t('formDescription')}
                   </p>
                 </div>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Status Messages */}
+                {/* Status Messages - Dynamic */}
                 {submitStatus === 'success' && (
                   <div className="p-4 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
                     <div className="flex items-center gap-3">
@@ -234,10 +255,10 @@ export default function ContactSection() {
                       </div>
                       <div className="flex-1">
                         <div className="font-medium text-green-800 dark:text-green-300">
-                          Message Sent Successfully!
+                          {t('successTitle')}
                         </div>
                         <div className="text-sm text-green-700 dark:text-green-400">
-                          Thank you for contacting us. We'll respond within 24 hours.
+                          {t('successMessage')}
                         </div>
                       </div>
                     </div>
@@ -252,10 +273,10 @@ export default function ContactSection() {
                       </div>
                       <div className="flex-1">
                         <div className="font-medium text-red-800 dark:text-red-300">
-                          Failed to Send Message
+                          {t('errorTitle')}
                         </div>
                         <div className="text-sm text-red-700 dark:text-red-400">
-                          Please try again or contact us directly via phone/email.
+                          {t('errorMessage')}
                         </div>
                       </div>
                     </div>
@@ -300,7 +321,7 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Phone Number
+                      {t('phoneLabel')}
                     </label>
                     <input
                       type="tel"
@@ -308,13 +329,13 @@ export default function ContactSection() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                      placeholder="+92 341 2786433"
+                      placeholder={t('phonePlaceholder')}
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Subject
+                      {t('subjectLabel')}
                     </label>
                     <select
                       name="subject"
@@ -323,12 +344,12 @@ export default function ContactSection() {
                       required
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
                     >
-                      <option value="">Select a subject</option>
-                      <option value="general">General Inquiry</option>
-                      <option value="support">Technical Support</option>
-                      <option value="collaboration">Collaboration</option>
-                      <option value="media">Media Inquiry</option>
-                      <option value="other">Other</option>
+                      <option value="">{t('selectSubject')}</option>
+                      {subjectOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {t(option.labelKey)}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -371,12 +392,12 @@ export default function ContactSection() {
                 </button>
 
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center pt-4">
-                  By submitting this form, you agree to our privacy policy. We'll never share your information.
+                  {t('privacyNotice')}
                 </p>
               </form>
             </motion.div>
 
-            {/* Additional Info */}
+            {/* Additional Info - Dynamic */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -385,14 +406,14 @@ export default function ContactSection() {
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-xl bg-blue-500/10">
-                  <Globe className="w-6 h-6 text-blue-500" />
+                  <GlobeIcon className="w-6 h-6 text-blue-500" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
-                    Global Reach
+                    {t('globalReachTitle')}
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400">
-                    We serve readers and researchers worldwide. Available in 5 languages: English, Urdu, Arabic, Farsi, and Hindi.
+                    {t('globalReachDescription')}
                   </p>
                 </div>
               </div>

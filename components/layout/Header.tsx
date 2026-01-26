@@ -9,6 +9,7 @@ import { Menu, X, Home, Info, BookOpen, Newspaper, Phone, MessageCircle } from '
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 
+
 export default function Header() {
   const t = useTranslations('Navbar');
   const common = useTranslations('Common');
@@ -46,7 +47,7 @@ export default function Header() {
     },
     { 
       name: t('whatsappGroups'), 
-      href: `/${currentLocale}#whatsapp`, 
+      href: `/${currentLocale}/whatsapp`, 
       icon: MessageCircle,
       translationKey: 'whatsappGroups'
     },
@@ -126,6 +127,7 @@ export default function Header() {
             <LanguageSwitcher />
             <ThemeToggle />
             
+            
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -159,8 +161,10 @@ export default function Header() {
                   </span>
                 </Link>
               ))}
+              
             </div>
           </div>
+          
         )}
       </div>
     </header>

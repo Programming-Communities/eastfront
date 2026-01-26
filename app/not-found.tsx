@@ -1,5 +1,6 @@
+// ✅ SERVER COMPONENT - NO 'use client'
 import Link from 'next/link';
-import { Home } from 'lucide-react';
+import { Home, AlertTriangle } from 'lucide-react';
 
 export default function NotFound() {
   return (
