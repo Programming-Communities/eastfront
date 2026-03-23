@@ -157,6 +157,8 @@
   "Books": {
     "title": "Digital Library",
     "description": "Explore our extensive collection of research papers, books, and publications on Islamic resistance and related topics",
+     "pages": "Pages", 
+      "language": "Language", 
     "digitalLibrary": "Digital Library",
     "folders": "Folders",
     "totalItems": "Total Items",
