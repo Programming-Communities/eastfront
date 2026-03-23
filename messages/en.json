@@ -1,10 +1,11 @@
 {
   "Hero": {
     "title": "Islamic Resistance",
+    "subtitle": "Standing for justice and truth since 2011",
     "description": "Since 2011, 24/7 coverage of Islamic resistance news, research and analysis",
     "missionTitle": "Our Mission",
     "missionDesc": "Wisdom, Strength, Integrity",
-    "visionTitle": "Our Vision",
+    "visionTitle": "Our Vision", 
     "visionDesc": "Preparation for the Appearance of Imam Mahdi (AS)",
     "booksTitle": "Digital Library",
     "booksDesc": "Download free PDF books on Islamic Resistance",
@@ -102,22 +103,19 @@
     "contactAdmin": "Contact Admin for More Groups",
     "activeLabel": "Active"
   },
- "Contact": {
+  "Contact": {
     "title": "Contact Us",
     "getInTouch": "Get In Touch",
     "description": "Get in touch for latest updates, research collaboration, or general inquiries. We're here to help.",
     "addressTitle": "Address",
     "location": "Soldier Bazaar, Jamshed Town, Karachi East, Pakistan",
     "addressSubtitle": "Karachi, Pakistan",
-    "addressLink": "addressLink",
     "phone": "Phone",
     "phoneNumber": "+92 341 2786433",
     "phoneSubtitle": "Available 24/7 for urgent matters",
-    "phoneLink": "phoneLink",
     "email": "Email",
     "emailAddress": "info@eastfront.pk",
     "emailSubtitle": "Response within 24 hours",
-    "emailLink": "emailLink",
     "workingHoursTitle": "Working Hours",
     "workingHours": "24/7 Support",
     "workingHoursSubtitle": "Online assistance available",
@@ -157,8 +155,8 @@
   "Books": {
     "title": "Digital Library",
     "description": "Explore our extensive collection of research papers, books, and publications on Islamic resistance and related topics",
-     "pages": "Pages", 
-      "language": "Language", 
+    "pages": "Pages",
+    "language": "Language",
     "digitalLibrary": "Digital Library",
     "folders": "Folders",
     "totalItems": "Total Items",
@@ -204,76 +202,60 @@
     "filterByCategory": "Filter by Category",
     "noBooksFound": "No books found",
     "tryDifferentSearch": "Try adjusting your search or filter criteria",
-    
     "primaryResearch": "Primary Research Collection",
     "primaryResearchDesc": "Main collection of 50+ research papers, analysis documents, and strategic studies",
     "primaryResearchCount": "50+ Books",
-    
     "islamicResistance": "Islamic Resistance Studies",
     "islamicResistanceDesc": "Core studies on Islamic resistance movements and strategies",
     "islamicResistanceCount": "25+ Books",
-    
     "geopoliticalAnalysis": "Geopolitical Analysis",
     "geopoliticalAnalysisDesc": "Middle East geopolitical studies and regional analysis",
     "geopoliticalAnalysisCount": "20+ Papers",
-    
     "militaryStrategy": "Military Strategy",
     "militaryStrategyDesc": "Defense strategies and modern warfare analysis",
     "militaryStrategyCount": "18+ Studies",
-    
     "diplomaticRelations": "Diplomatic Relations",
     "diplomaticRelationsDesc": "International relations and foreign policy analysis",
     "diplomaticRelationsCount": "15+ Documents",
-    
     "economicStudies": "Economic Studies",
     "economicStudiesDesc": "Economic resistance and Islamic finance research",
     "economicStudiesCount": "12+ Papers",
-    
     "mediaInformation": "Media & Information",
     "mediaInformationDesc": "Media warfare and information strategy analysis",
     "mediaInformationCount": "10+ Studies",
-    
     "historicalArchives": "Historical Archives",
     "historicalArchivesDesc": "Historical documents and resistance movement archives",
     "historicalArchivesCount": "30+ Archives",
-    
     "technologySecurity": "Technology & Security",
     "technologySecurityDesc": "Cyber security and digital resistance strategies",
     "technologySecurityCount": "8+ Papers",
-    
     "specialReports": "Special Reports",
     "specialReportsDesc": "Exclusive reports and confidential analysis",
     "specialReportsCount": "15+ Reports",
-    
     "strategicMaps": "Strategic Maps",
     "strategicMapsDesc": "Geographical and strategic mapping resources",
     "strategicMapsCount": "25+ Maps",
-    
     "audioVideoLibrary": "Audio/Video Library",
     "audioVideoLibraryDesc": "Educational videos, lectures, and audio resources",
     "audioVideoLibraryCount": "40+ Media",
-    
     "featuredBook1Title": "Concept and Practical Implementation of Islamic Resistance",
     "featuredBook1Desc": "Comprehensive study on the concept and practical implementation of Islamic resistance movements in modern context",
     "featuredBook1Size": "4.7 MB",
     "featuredBook1Pages": "120 pages",
     "featuredBook1Language": "Urdu/English",
     "featuredBook1Downloads": "1.8K downloads",
-    
     "featuredBook2Title": "Geopolitics of Middle East",
     "featuredBook2Desc": "In-depth analysis of Middle Eastern geopolitical dynamics, power structures and regional conflicts",
     "featuredBook2Size": "6.2 MB",
     "featuredBook2Pages": "156 pages",
     "featuredBook2Language": "Urdu",
     "featuredBook2Downloads": "2.3K downloads",
-    
     "featuredBook3Title": "Defense Strategy and Modern Warfare",
     "featuredBook3Desc": "Advanced defense mechanisms, strategic planning and modern warfare tactics analysis",
     "featuredBook3Size": "8.1 MB",
     "featuredBook3Pages": "210 pages",
     "featuredBook3Language": "Urdu/Arabic",
     "featuredBook3Downloads": "3.1K downloads",
-    
     "totalResources": "Total Resources",
     "resourcesDescription": "Books, papers, maps, and media files",
     "languages": "Languages",
@@ -281,7 +263,6 @@
     "dailyUpdates": "Daily Updates",
     "newContent": "New content added regularly",
     "latestUpdate": "Latest update",
-    
     "howToUse": "How to Use This Library",
     "step1": "Click any folder to open it directly in Google Drive",
     "step2": "Browse through organized categories and subfolders",
@@ -342,7 +323,7 @@
     "visionEnglish": "Preparation for the Appearance of Imam Mahdi (AS)",
     "editorialNote": "All content is curated and verified by our editorial team."
   },
-    "News": {
+  "News": {
     "title": "News & Updates",
     "description": "Stay updated with the latest developments, analysis, and breaking news from the Islamic resistance front",
     "latestUpdates": "Latest Updates",
@@ -356,8 +337,7 @@
     "newsSources": "Our News Sources",
     "stayUpdated": "Stay Updated 24/7",
     "ctaDescription": "Join our WhatsApp groups and Telegram channel for real-time updates and breaking news alerts"
-},
-
+  },
   "NotFound": {
     "errorCode": "Error 404",
     "title": "Page Not Found",
@@ -382,9 +362,8 @@
     "needHelp": "Still need help? Contact our support team",
     "callSupport": "Call Support"
   },
-    "Share": {
+  "Share": {
     "shareTitle": "Share this page",
     "sharePreview": "This is how the link will appear when shared"
   }
 }
-  

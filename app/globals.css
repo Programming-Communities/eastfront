@@ -1,5 +1,7 @@
+/* app/globals.css - KEEP YOUR ORIGINAL + ADD DARK MODE */
 @import "tailwindcss";
 
+/* ✅ KEEP YOUR EXISTING CSS */
 :root {
   --background: #ffffff;
   --foreground: #000000;
@@ -21,12 +23,29 @@
   --font-urdu: 'Noto Nastaliq Urdu', serif;
 }
 
+/* ✅ KEEP YOUR EXISTING CSS */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  overflow-x: hidden;
   transition: background-color 0.3s ease;
+}
+
+.urdu-text {
+  font-family: var(--font-urdu);
+  line-height: 2;
+  direction: rtl;
+}
+
+/* ✅ ADD THESE FOR DARK MODE */
+@layer base {
+  html {
+    @apply transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-black text-white;
+  }
 }
 
 /* Typography */

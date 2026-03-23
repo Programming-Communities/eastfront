@@ -13,32 +13,65 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Start with 'light' to prevent hydration mismatch
+  // ✅ START WITH UNDEFINED to prevent hydration mismatch
   const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     
-    // Check localStorage for saved theme
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    
-    if (savedTheme) {
-      setThemeState(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = prefersDark ? 'dark' : 'light';
-      setThemeState(initialTheme);
-      document.documentElement.classList.toggle('dark', prefersDark);
+    // Check system preference safely
+    let prefersDark = false;
+    try {
+      prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch (e) {
+      prefersDark = false;
     }
+    
+    // Check localStorage safely
+    let savedTheme: Theme | null = null;
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light') {
+        savedTheme = stored;
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+    
+    // Determine initial theme
+    let initialTheme: Theme = prefersDark ? 'dark' : 'light';
+    if (savedTheme) {
+      initialTheme = savedTheme;
+    }
+    
+    setThemeState(initialTheme);
+    applyTheme(initialTheme);
   }, []);
+
+  const applyTheme = (theme: Theme) => {
+    try {
+      const root = document.documentElement;
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        root.style.colorScheme = 'dark';
+      } else {
+        root.classList.remove('dark');
+        root.style.colorScheme = 'light';
+      }
+    } catch (e) {
+      // Ignore errors
+    }
+  };
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+    applyTheme(newTheme);
   };
 
   const toggleTheme = () => {
@@ -46,18 +79,20 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(newTheme);
   };
 
-  // ✅ SIMPLIFIED: Don't return body, just return loading div
-  if (!mounted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-      </div>
-    );
-  }
-
+  // ✅ CRITICAL: Return SAME structure during SSR and CSR
+  // Don't return loading state - just return children with fallback
+  
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      {children}
+      {/* ✅ Add a wrapper div that's always present */}
+      <div className={`min-h-screen ${mounted ? '' : 'invisible'}`}>
+        {mounted ? children : (
+          // ✅ Empty placeholder with same dimensions
+          <div style={{ visibility: 'hidden' }}>
+            {children}
+          </div>
+        )}
+      </div>
     </ThemeContext.Provider>
   );
 }

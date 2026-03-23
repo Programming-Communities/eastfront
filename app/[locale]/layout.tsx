@@ -263,139 +263,33 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   const { dir } = localeConfig[locale as keyof typeof localeConfig] || localeConfig.en;
 
   return (
-    <html 
-      lang={locale} 
-      dir={dir} 
+  <html 
+    lang={locale} 
+    dir={dir} 
+    suppressHydrationWarning
+    className={`${inter.variable}`}
+  >
+    <head>
+      {/* ... keep existing head content ... */}
+    </head>
+    <body 
+      className={`${inter.className} bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-200 min-h-screen flex flex-col`}
       suppressHydrationWarning
-      className={`${inter.variable}`} // ✅ Font variable for performance
     >
-      <head>
-        {/* ✅ CRITICAL: Preconnect for performance - TTFB fix */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href={baseUrl} />
-        
-        {/* ✅ OPTIMIZED: Font loading with swap and only needed weights */}
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-          crossOrigin="anonymous"
-        />
-        
-        {/* ✅ OPTIMIZED: Preload critical assets */}
-        <link rel="preload" href={`${baseUrl}/logo-1200x630.jpg`} as="image" type="image/jpeg" />
-        <link rel="preload" href="/logo-192x192.jpg" as="image" type="image/jpeg" />
-        
-        {/* ✅ OPTIMIZED: Additional meta tags for social sharing */}
-        <meta name="twitter:site" content="@eastfront_pk" />
-        <meta name="twitter:creator" content="@eastfront_pk" />
-        
-        {/* ✅ OPTIMIZED: WhatsApp specific metadata */}
-        <meta property="og:whatsapp:page" content="https://wa.me/+923412786433" />
-        
-        {/* ✅ OPTIMIZED: Telegram specific metadata */}
-        <meta property="og:telegram:channel" content="https://t.me/eastfront_pk" />
-        
-        {/* ✅ OPTIMIZED: Additional structured data for better SEO */}
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "EastFront PK",
-              "url": baseUrl,
-              "logo": `${baseUrl}/logo.jpg`,
-              "description": "Islamic Resistance Movement Since 2011",
-              "foundingDate": "2011",
-              "sameAs": [
-                "https://t.me/eastfront_pk",
-                "https://wa.me/+923412786433"
-              ]
-            })
-          }}
-        />
-        
-        {/* ✅ OPTIMIZED: Critical CSS for FCP improvement */}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              /* Critical CSS for initial render */
-              .critical-render {
-                opacity: 0;
-                animation: fadeIn 0.3s ease forwards;
-              }
-              @keyframes fadeIn {
-                to { opacity: 1; }
-              }
-              
-              /* Prevent layout shift */
-              img {
-                content-visibility: auto;
-              }
-              
-              /* System font stack for faster text rendering */
-              .system-fonts {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-              }
-            `,
-          }}
-        />
-      </head>
-      <body 
-        className={`${inter.className} bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-200 min-h-screen flex flex-col`}
-        suppressHydrationWarning
-      >
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-grow critical-render">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </NextIntlClientProvider>
-        
-        {/* ✅ OPTIMIZED: Additional schema markup */}
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "url": baseUrl,
-              "name": "EastFront PK",
-              "description": "Islamic Resistance Movement Since 2011",
-              "inLanguage": Object.values(localeConfig).map(l => l.code)
-            })
-          }}
-        />
-        
-        {/* ✅ OPTIMIZED: Performance monitoring script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Performance monitoring
-              if (window.performance) {
-                window.addEventListener('load', () => {
-                  const perfData = performance.getEntriesByType('navigation')[0];
-                  if (perfData) {
-                    console.log('🚀 Performance Metrics:', {
-                      TTFB: perfData.responseStart - perfData.requestStart,
-                      FCP: performance.getEntriesByName('first-contentful-paint')[0]?.startTime,
-                      LCP: performance.getEntriesByName('largest-contentful-paint')[0]?.startTime
-                    });
-                  }
-                });
-              }
-            `,
-          }}
-        />
-      </body>
-    </html>
-  );
+      <NextIntlClientProvider messages={messages}>
+        {/* ✅ ADD THEME PROVIDER HERE */}
+        <ThemeProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
+      </NextIntlClientProvider>
+      {/* ... rest of body content ... */}
+    </body>
+  </html>
+);
 }

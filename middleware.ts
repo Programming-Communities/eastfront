@@ -1,5 +1,6 @@
+// middleware.ts - SIMPLE FIX
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from '@/lib/i18n';
+import { locales, defaultLocale } from './lib/i18n';
 
 export default createMiddleware({
   locales: locales as any,
@@ -8,5 +9,5 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ['/', '/(ur|en|hi|fa|ar)/:path*']
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

@@ -9,7 +9,6 @@ import { Menu, X, Home, Info, BookOpen, Newspaper, Phone, MessageCircle } from '
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 
-
 export default function Header() {
   const t = useTranslations('Navbar');
   const common = useTranslations('Common');
@@ -71,13 +70,13 @@ export default function Header() {
   const logoAltText = common('logoAlt') || 'EastFront PK Logo';
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+    <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo with Image - Dynamic alt text */}
-          <Link href={`/${currentLocale}`} className="flex items-center space-x-3">
+          <Link href={`/${currentLocale}`} className="flex items-center space-x-3 group">
             <div className="relative w-12 h-12">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 {/* Fallback EF text if image fails */}
                 <span className="text-white font-bold text-lg">EF</span>
               </div>
@@ -111,7 +110,7 @@ export default function Header() {
                 href={item.href}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                   isActive(item.href)
-                    ? 'bg-red-600 text-white'
+                    ? 'bg-red-600 text-white dark:bg-red-700'
                     : 'text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
                 aria-label={item.name}
@@ -127,11 +126,10 @@ export default function Header() {
             <LanguageSwitcher />
             <ThemeToggle />
             
-            
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={isMenuOpen ? t('closeMenu') || 'Close menu' : t('openMenu') || 'Open menu'}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -141,16 +139,16 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-3 pb-3">
-            <div className="flex flex-col space-y-2 bg-white dark:bg-gray-900 rounded-xl p-2 shadow-lg">
+          <div className="md:hidden mt-3 pb-3 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-col space-y-2 bg-white dark:bg-gray-900 rounded-xl p-2 shadow-lg border border-gray-200 dark:border-gray-700">
               {navItems.map((item) => (
                 <Link
                   key={item.translationKey}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
+                  className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 ${
                     isActive(item.href)
-                      ? 'bg-red-600 text-white'
+                      ? 'bg-red-600 text-white dark:bg-red-700'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white'
                   }`}
                   aria-label={item.name}
@@ -162,9 +160,19 @@ export default function Header() {
                 </Link>
               ))}
               
+              {/* Mobile Theme Toggle */}
+              <div className="p-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Theme:</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {document.documentElement.classList.contains('dark') ? 'Dark' : 'Light'}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
         )}
       </div>
     </header>
