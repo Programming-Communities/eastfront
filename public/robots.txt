@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*_buildManifest.js$
+Disallow: /*_ssgManifest.js$
+
+Sitemap: https://eastfront.pk/sitemap.xml
+Sitemap: https://eastfront.pk/server-sitemap.xml
+
+Host: https://eastfront.pk
+Crawl-delay: 5

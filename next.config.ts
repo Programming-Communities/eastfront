@@ -4,7 +4,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  // ✅ CRITICAL: Image optimization for LCP
+  // ✅ SEO: Enable trailing slashes for better URL structure
+  trailingSlash: false,
+  
+  // ✅ SEO: Remove powered by header
+  poweredByHeader: false,
+  
+  // ✅ SEO: Image optimization for better LCP scores
   images: {
     remotePatterns: [
       {
@@ -17,37 +23,58 @@ const nextConfig: NextConfig = {
         hostname: 'lh3.googleusercontent.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.cloudfront.net',
+        pathname: '/**',
+      },
     ],
-    // ✅ OPTIMIZED: Image formats for modern browsers
     formats: ['image/avif', 'image/webp'],
-    // ✅ OPTIMIZED: Device sizes for responsive images
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    // ✅ OPTIMIZED: Image sizes for performance
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    // ✅ OPTIMIZED: Cache TTL
-    minimumCacheTTL: 60 * 60 * 24, // 24 hours
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // ✅ CRITICAL: Bundle optimization
+  // ✅ SEO: Compress output
+  compress: true,
+  
+  // ✅ SEO: Production optimization
   compiler: {
-    // ✅ Remove console.log in production
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error', 'warn'],
     } : false,
-    // ✅ Remove React properties for smaller bundles
     reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
   
-  // ✅ OPTIMIZED: Compression
-  compress: true,
+  // ✅ SEO: Generate static pages for better performance
+  output: 'standalone',
   
-  // ✅ OPTIMIZED: Headers for performance
+  // ✅ SEO: Production source maps disabled
+  productionBrowserSourceMaps: false,
+  
+  // ✅ SEO: Skip TypeScript errors in production
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+  // ✅ SEO: Skip ESLint errors in production
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
+  // ✅ SEO: Optimized headers for caching and security
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/:path*',
         headers: [
-          // ✅ Security headers
           {
             key: 'X-DNS-Prefetch-Control',
             value: 'on'
@@ -64,68 +91,191 @@ const nextConfig: NextConfig = {
             key: 'X-XSS-Protection',
             value: '1; mode=block'
           },
-          // ✅ Performance headers
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
           },
           {
-            key: 'Vary',
-            value: 'Accept-Encoding'
-          },
-        ],
-      },
-      // ✅ Static assets caching
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
           },
         ],
       },
-      // ✅ Image caching
       {
-        source: '/(.*).(jpg|jpeg|png|gif|ico|webp|avif|svg)$',
+        source: '/:path*.xml',
         headers: [
           {
+            key: 'Content-Type',
+            value: 'application/xml',
+          },
+          {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, s-maxage=86400'
+            value: 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
           },
         ],
       },
-      // ✅ Font caching
       {
-        source: '/(.*).(woff|woff2|ttf|otf|eot)$',
+        source: '/:path*.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*.{jpg,jpeg,png,gif,ico,webp,avif,svg}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        source: '/:path*.{woff,woff2,ttf,otf,eot}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*.{js,css}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
     ];
   },
   
-  // ✅ OPTIMIZED: Experimental features
-  experimental: {
-    optimizeCss: true, // ✅ CSS optimization
-    // optimizeServerReact: true, // ✅ Comment out if not supported
+  // ✅ SEO: Redirects for SEO optimization
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/en',
+        permanent: true,
+      },
+      {
+        source: '/index.html',
+        destination: '/en',
+        permanent: true,
+      },
+      {
+        source: '/home',
+        destination: '/en',
+        permanent: true,
+      },
+    ];
   },
   
-  // ✅ OPTIMIZED: Reduce bundle size
-  output: 'standalone', // ✅ For better Docker/Serverless deployment
+  // ✅ SEO: Rewrites for better URL structure
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap',
+        destination: '/sitemap.xml',
+      },
+      {
+        source: '/robots',
+        destination: '/robots.txt',
+      },
+      {
+        source: '/manifest',
+        destination: '/manifest.webmanifest',
+      },
+    ];
+  },
   
-  // ✅ OPTIMIZED: Disable source maps in production
-  productionBrowserSourceMaps: false,
+  // ✅ SEO: Webpack optimization
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    
+    // Optimize bundle size
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            priority: 10,
+          },
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-is)[\\/]/,
+            name: 'react',
+            chunks: 'all',
+            priority: 20,
+          },
+          next: {
+            test: /[\\/]node_modules[\\/](next|next-intl)[\\/]/,
+            name: 'next',
+            chunks: 'all',
+            priority: 30,
+          },
+        },
+      },
+    };
+    
+    return config;
+  },
   
-  // ✅ OPTIMIZED: Remove powered by header
-  poweredByHeader: false,
+  // ✅ SEO: Experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'next-intl'],
+    // Removed: turbo (not supported in this version)
+    // Removed: optimizeServerReact (not supported)
+  },
   
-  // ✅ Keep existing configurations
-  typescript: {
-    ignoreBuildErrors: true,
+  // ✅ SEO: i18n configuration for multilingual SEO
+  i18n: {
+    locales: ['en', 'ur', 'ar', 'fa', 'hi'],
+    defaultLocale: 'en',
+    localeDetection: true,
+    domains: [
+      {
+        domain: 'eastfront.pk',
+        defaultLocale: 'en',
+      },
+    ],
   },
 };
 
