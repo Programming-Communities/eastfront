@@ -138,7 +138,7 @@ const getPageMetadata = (locale: string, pathname: string = '/') => {
   };
 };
 
-// ✅ OPTIMIZED: Dynamic metadata generator
+// ✅ OPTIMIZED: Dynamic metadata generator with FIXED canonical URL
 export async function generateMetadata({ 
   params 
 }: { 
@@ -157,7 +157,7 @@ export async function generateMetadata({
     description: metadata.description,
     keywords: metadata.keywords,
     
-    // ✅ OPTIMIZED: Open Graph with better image optimization
+    // ✅ FIXED: Open Graph with better image optimization
     openGraph: {
       type: 'website',
       locale: metadata.ogLocale,
@@ -199,7 +199,7 @@ export async function generateMetadata({
       shortcut: ['/favicon.ico'],
     },
     
-    // ✅ OPTIMIZED: Robots config
+    // ✅ FIXED: Robots config
     robots: {
       index: true,
       follow: true,
@@ -212,15 +212,16 @@ export async function generateMetadata({
       },
     },
     
-    // ✅ OPTIMIZED: Alternates for multilingual SEO
+    // ✅ FIXED: Alternates for multilingual SEO with proper canonical
     alternates: {
       canonical: currentUrl,
       languages: {
-        'en-US': `${baseUrl}/en`,
-        'ur-PK': `${baseUrl}/ur`,
-        'ar-SA': `${baseUrl}/ar`,
-        'fa-IR': `${baseUrl}/fa`,
-        'hi-IN': `${baseUrl}/hi`,
+        'en': `${baseUrl}/en`,
+        'ur': `${baseUrl}/ur`,
+        'ar': `${baseUrl}/ar`,
+        'fa': `${baseUrl}/fa`,
+        'hi': `${baseUrl}/hi`,
+        'x-default': `${baseUrl}/en`,
       },
     },
     

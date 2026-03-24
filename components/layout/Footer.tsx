@@ -16,19 +16,21 @@ export default function Footer() {
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
-  // Dynamic social links with translations
+  // Dynamic social links with better contrast and accessibility
   const socialLinks = [
     { 
       name: t('telegram'), 
       url: common('telegramLink') || 'https://t.me/eastfront_pk',
       icon: Send,
-      color: 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
+      color: 'bg-blue-600 hover:bg-blue-700',
+      ariaLabel: 'Telegram channel'
     },
     { 
       name: t('whatsapp'), 
       url: common('whatsappLink') || 'https://wa.me/+923412786433',
       icon: MessageCircle,
-      color: 'bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800'
+      color: 'bg-green-600 hover:bg-green-700',
+      ariaLabel: 'WhatsApp contact'
     }
   ];
 
@@ -55,10 +57,10 @@ export default function Footer() {
     <footer className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-gray-900 text-white'} transition-colors duration-200`}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* About Section - Dynamic */}
+          {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">{common('title')}</h3>
-            <p className="text-gray-400 dark:text-gray-300 mb-4">
+            <h2 className="text-xl font-bold mb-4">{common('title')}</h2>
+            <p className="text-gray-300 mb-4">
               {common('description') || t('defaultDescription')}
             </p>
             <div className="flex space-x-4">
@@ -68,8 +70,8 @@ export default function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-2 ${social.color} rounded-lg transition-colors duration-200 flex items-center space-x-2`}
-                  aria-label={social.name}
+                  className={`p-2 ${social.color} rounded-lg transition-colors duration-200 flex items-center space-x-2 text-white`}
+                  aria-label={social.ariaLabel}
                 >
                   <social.icon className="w-4 h-4" />
                   <span className="text-sm">{social.name}</span>
@@ -78,15 +80,16 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links - Dynamic with locale */}
+          {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-4">{t('quickLinks')}</h4>
+            <h3 className="text-lg font-bold mb-4">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.key}>
                   <Link 
                     href={link.href}
-                    className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors duration-200 flex items-center"
+                    className="text-gray-300 hover:text-white transition-colors duration-200 flex items-center"
+                    aria-label={`Go to ${link.name}`}
                   >
                     <span>{link.name}</span>
                     {link.href.includes('#') && (
@@ -98,17 +101,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info - Dynamic */}
+          {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-bold mb-4">{t('contact')}</h4>
+            <h3 className="text-lg font-bold mb-4">{t('contact')}</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" />
                 <div>
-                  <p className="text-gray-400 dark:text-gray-300 text-sm">
+                  <p className="text-gray-300 text-sm">
                     {common('addressUrdu')}
                   </p>
-                  <p className="text-gray-400 dark:text-gray-300 text-sm">
+                  <p className="text-gray-300 text-sm">
                     {common('addressEnglish')}
                   </p>
                 </div>
@@ -118,7 +121,8 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-red-400 shrink-0" />
                 <a 
                   href={`tel:${common('phone')}`}
-                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  aria-label={`Call ${common('phone')}`}
                 >
                   {common('phone')}
                 </a>
@@ -128,7 +132,8 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-red-400 shrink-0" />
                 <a 
                   href={`mailto:${common('email')}`}
-                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  aria-label={`Email ${common('email')}`}
                 >
                   {common('email')}
                 </a>
@@ -136,39 +141,32 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Mission & Vision - Dynamic with locale */}
+          {/* Mission & Vision */}
           <div>
-            <h4 className="text-lg font-bold mb-4">{t('mission')}</h4>
-            <p className={`text-gray-400 dark:text-gray-300 mb-4 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <h3 className="text-lg font-bold mb-4">{t('mission')}</h3>
+            <p className={`text-gray-300 mb-4 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {missionText}
             </p>
-            <h4 className="text-lg font-bold mb-4">{t('vision')}</h4>
-            <p className={`text-gray-400 dark:text-gray-300 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <h3 className="text-lg font-bold mb-4">{t('vision')}</h3>
+            <p className={`text-gray-300 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {visionText}
             </p>
           </div>
         </div>
 
-        {/* Copyright and Made By Section */}
-        <div className="border-t border-gray-800 dark:border-gray-700 mt-8 pt-8">
-          {/* Main Copyright */}
-          <div className="text-center text-gray-400 dark:text-gray-300 mb-3">
-            <p>{t('copyright', { year: currentYear })}</p>
-          </div>
-          
-          {/* Made By Section with Link */}
-          <div className="text-center">
+        {/* Copyright */}
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>{t('copyright', { year: currentYear })}</p>
+          <div className="flex items-center justify-center space-x-2 mt-2">
+            <Heart className="w-3 h-3 text-red-500" />
             <a
               href="https://www.communities.pk/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 group"
+              className="text-xs text-gray-400 hover:text-white transition-colors"
+              aria-label="Made by Communities.pk"
             >
-              <Heart className="w-4 h-4 text-red-500 group-hover:scale-110 transition-transform duration-300" />
-              <span className="text-sm text-gray-400 group-hover:text-white transition-colors duration-300">
-                {t('madeBy')}
-              </span>
-              <ExternalLink className="w-3 h-3 text-gray-500 group-hover:text-white transition-colors duration-300" />
+              {t('madeBy')}
             </a>
           </div>
         </div>

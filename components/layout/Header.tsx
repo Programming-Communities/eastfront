@@ -79,25 +79,23 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo with Image - Fixed hydration issue */}
+          {/* Logo with Image - OPTIMIZED */}
           <Link href={`/${currentLocale}`} className="flex items-center space-x-3 group">
             <div className="relative w-12 h-12 shrink-0">
               {/* Fallback EF text if image fails */}
               <div className="absolute inset-0 bg-linear-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 <span className="text-white font-bold text-lg">EF</span>
               </div>
-              {/* Logo Image - Fixed with unoptimized for hydration */}
-              <div className="relative w-12 h-12">
-                <Image
-                  src="/logo.jpg"
-                  alt={logoAltText}
-                  fill
-                  className="object-contain rounded-lg"
-                  sizes="48px"
-                  priority
-                  unoptimized={!mounted}
-                />
-              </div>
+              {/* Logo Image - OPTIMIZED with width/height */}
+              <Image
+                src="/logo.jpg"
+                alt={logoAltText}
+                width={48}
+                height={48}
+                className="object-contain rounded-lg"
+                priority
+                sizes="48px"
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold text-black dark:text-white">

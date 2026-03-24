@@ -16,23 +16,12 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         '/private/',
         '/_next/',
         '/_static/',
-        '/_error',
-        '/404',
-        '/500',
         '/*.json$',
         '/*_buildManifest.js$',
         '/*_ssgManifest.js$',
-        '/favicon.ico',
-        '/icon',
-        '/og',
-        '/manifest.webmanifest',
       ],
-      crawlDelay: 5, // Be respectful to the server
     },
-    sitemap: [
-      `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/server-sitemap.xml`,
-    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   };
 }
