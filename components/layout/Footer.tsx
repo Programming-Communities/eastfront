@@ -16,21 +16,21 @@ export default function Footer() {
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
-  // Dynamic social links with better contrast and accessibility
+  // Dynamic social links with BETTER CONTRAST (darker colors)
   const socialLinks = [
     { 
       name: t('telegram'), 
       url: common('telegramLink') || 'https://t.me/eastfront_pk',
       icon: Send,
-      color: 'bg-blue-600 hover:bg-blue-700',
-      ariaLabel: 'Telegram channel'
+      color: 'bg-blue-700 hover:bg-blue-800 text-white',
+      ariaLabel: 'Telegram channel - opens in new tab'
     },
     { 
       name: t('whatsapp'), 
       url: common('whatsappLink') || 'https://wa.me/+923412786433',
       icon: MessageCircle,
-      color: 'bg-green-600 hover:bg-green-700',
-      ariaLabel: 'WhatsApp contact'
+      color: 'bg-green-700 hover:bg-green-800 text-white',
+      ariaLabel: 'WhatsApp contact - opens in new tab'
     }
   ];
 
@@ -70,11 +70,11 @@ export default function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-2 ${social.color} rounded-lg transition-colors duration-200 flex items-center space-x-2 text-white`}
+                  className={`p-2 ${social.color} rounded-lg transition-colors duration-200 flex items-center space-x-2`}
                   aria-label={social.ariaLabel}
                 >
-                  <social.icon className="w-4 h-4" />
-                  <span className="text-sm">{social.name}</span>
+                  <social.icon className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-sm font-medium">{social.name}</span>
                 </a>
               ))}
             </div>
@@ -93,7 +93,7 @@ export default function Footer() {
                   >
                     <span>{link.name}</span>
                     {link.href.includes('#') && (
-                      <ExternalLink className="w-3 h-3 ml-1" />
+                      <ExternalLink className="w-3 h-3 ml-1" aria-hidden="true" />
                     )}
                   </Link>
                 </li>
@@ -106,7 +106,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-4">{t('contact')}</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" />
+                <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" aria-hidden="true" />
                 <div>
                   <p className="text-gray-300 text-sm">
                     {common('addressUrdu')}
@@ -118,7 +118,7 @@ export default function Footer() {
               </div>
               
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-red-400 shrink-0" />
+                <Phone className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`tel:${common('phone')}`}
                   className="text-gray-300 hover:text-white transition-colors duration-200"
@@ -129,7 +129,7 @@ export default function Footer() {
               </div>
               
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-red-400 shrink-0" />
+                <Mail className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`mailto:${common('email')}`}
                   className="text-gray-300 hover:text-white transition-colors duration-200"
@@ -158,13 +158,13 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>{t('copyright', { year: currentYear })}</p>
           <div className="flex items-center justify-center space-x-2 mt-2">
-            <Heart className="w-3 h-3 text-red-500" />
+            <Heart className="w-3 h-3 text-red-500" aria-hidden="true" />
             <a
               href="https://www.communities.pk/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-gray-400 hover:text-white transition-colors"
-              aria-label="Made by Communities.pk"
+              aria-label="Made by Communities.pk - opens in new tab"
             >
               {t('madeBy')}
             </a>
