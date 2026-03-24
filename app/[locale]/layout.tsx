@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import '../globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { headers } from 'next/headers';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
@@ -147,12 +148,22 @@ export async function generateMetadata({
   const { locale } = await params;
   const metadata = getPageMetadata(locale);
   
-  // Get the current path from the URL - this is important for canonical
-  const currentUrl = `${baseUrl}/${locale}`;
+  // Get the current URL path from headers for proper canonical URL
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
   
-  // For nested pages, we need to get the full path
-  // This will be handled by the page component's own metadata
-
+  // Build the correct canonical URL based on the actual path
+  let currentUrl = `${baseUrl}/${locale}`;
+  
+  // If there's a path after locale, add it to canonical URL
+  if (pathname) {
+    // Extract the part after locale
+    const pathWithoutLocale = pathname.replace(`/${locale}`, '');
+    if (pathWithoutLocale && pathWithoutLocale !== '') {
+      currentUrl = `${baseUrl}/${locale}${pathWithoutLocale}`;
+    }
+  }
+  
   return {
     metadataBase: new URL(baseUrl),
     title: {
