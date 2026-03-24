@@ -29,13 +29,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // Add root redirect URL
-  sitemapEntries.push({
-    url: `${baseUrl}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily',
-    priority: 0.9,
-  });
-
   return sitemapEntries;
 }

@@ -38,34 +38,33 @@ export default function LanguageSwitcher() {
     }
   };
 
-  // ✅ NO LOADING STATE - Always return the same structure
   return (
     <div className="relative" ref={dropdownRef}>
       {/* Desktop/Tablet Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+        className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
         aria-label="Change language"
       >
-        <Globe className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+        <Globe className="w-4 h-4 text-gray-700 dark:text-gray-300" />
         <span className="font-medium hidden md:inline text-gray-800 dark:text-gray-200">
           {localeNames[locale as keyof typeof localeNames] || 'English'}
         </span>
-        <ChevronDown className={`w-4 h-4 text-gray-600 dark:text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-gray-700 dark:text-gray-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Mobile Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="sm:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+        className="sm:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
         aria-label="Change language"
       >
-        <Globe className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+        <Globe className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-900 backdrop-blur-xl rounded-xl border border-gray-200 dark:border-gray-700 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="px-3 py-2">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Select Language</div>
           </div>

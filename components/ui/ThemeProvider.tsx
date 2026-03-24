@@ -14,7 +14,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
 
   // Apply theme to document
   const applyTheme = (newTheme: Theme) => {
@@ -30,8 +29,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize theme on mount only
   useEffect(() => {
-    setMounted(true);
-    
     // Check localStorage first
     let savedTheme: Theme | null = null;
     try {
@@ -60,8 +57,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Listen for system theme changes
   useEffect(() => {
-    if (!mounted) return;
-    
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       // Only update if no saved preference
@@ -79,7 +74,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [mounted]);
+  }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
@@ -96,7 +91,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(newTheme);
   };
 
-  // IMPORTANT: Return same structure on server and client - NO conditional div
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
       {children}

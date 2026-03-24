@@ -79,14 +79,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo with Image - OPTIMIZED */}
+          {/* Logo */}
           <Link href={`/${currentLocale}`} className="flex items-center space-x-3 group">
             <div className="relative w-12 h-12 shrink-0">
-              {/* Fallback EF text if image fails */}
+              {/* Fallback EF text */}
               <div className="absolute inset-0 bg-linear-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 <span className="text-white font-bold text-lg">EF</span>
               </div>
-              {/* Logo Image - OPTIMIZED with width/height */}
+              {/* Logo Image */}
               <Image
                 src="/logo.jpg"
                 alt={logoAltText}
@@ -115,12 +115,12 @@ export default function Header() {
                 href={item.href}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                   isActive(item.href)
-                    ? 'bg-red-600 text-white dark:bg-red-700'
+                    ? 'bg-red-600 text-white dark:bg-red-700 dark:text-white'
                     : 'text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
                 aria-label={item.name}
               >
-                <item.icon className="w-4 h-4" />
+                <item.icon className="w-4 h-4" aria-hidden="true" />
                 <span className="font-medium">{item.name}</span>
               </Link>
             ))}
@@ -137,7 +137,7 @@ export default function Header() {
               className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={isMenuOpen ? t('closeMenu') || 'Close menu' : t('openMenu') || 'Open menu'}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -153,15 +153,13 @@ export default function Header() {
                   onClick={() => setIsMenuOpen(false)}
                   className={`flex items-center space-x-3 p-3 rounded-lg transition-colors duration-200 ${
                     isActive(item.href)
-                      ? 'bg-red-600 text-white dark:bg-red-700'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white'
+                      ? 'bg-red-600 text-white dark:bg-red-700 dark:text-white'
+                      : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                   aria-label={item.name}
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">
-                    {item.name}
-                  </span>
+                  <item.icon className="w-5 h-5" aria-hidden="true" />
+                  <span className="font-medium">{item.name}</span>
                 </Link>
               ))}
             </div>

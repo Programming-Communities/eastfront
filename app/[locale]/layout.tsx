@@ -180,6 +180,7 @@ export async function generateMetadata({
     description: metadata.description,
     keywords: metadata.keywords,
     
+    // ✅ OPTIMIZED: Open Graph with correct image
     openGraph: {
       type: 'website',
       locale: metadata.ogLocale,
@@ -198,6 +199,7 @@ export async function generateMetadata({
       ],
     },
     
+    // ✅ OPTIMIZED: Twitter Cards
     twitter: {
       card: 'summary_large_image',
       title: metadata.title,
@@ -207,6 +209,7 @@ export async function generateMetadata({
       site: '@eastfront_pk',
     },
     
+    // ✅ OPTIMIZED: Icons with modern formats
     icons: {
       icon: [
         { url: '/favicon.ico' },
@@ -219,6 +222,7 @@ export async function generateMetadata({
       shortcut: ['/favicon.ico'],
     },
     
+    // ✅ OPTIMIZED: Robots config
     robots: {
       index: true,
       follow: true,
@@ -231,6 +235,7 @@ export async function generateMetadata({
       },
     },
     
+    // ✅ FIXED: Alternates for multilingual SEO with proper canonical
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -243,6 +248,7 @@ export async function generateMetadata({
       },
     },
     
+    // ✅ OPTIMIZED: Additional metadata
     authors: [{ name: 'EastFront PK Editorial Team' }],
     publisher: metadata.siteName,
     category: 'Education & Research',

@@ -12,29 +12,26 @@ export default function Footer() {
   const pathname = usePathname();
   const { theme } = useTheme();
   
-  // Get current locale from pathname
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
-  // Social links with BETTER CONTRAST (darker colors for better readability)
   const socialLinks = [
     { 
       name: t('telegram'), 
       url: common('telegramLink') || 'https://t.me/eastfront_pk',
       icon: Send,
-      color: 'bg-blue-700 hover:bg-blue-800 text-white',
+      color: 'bg-blue-700 hover:bg-blue-800 text-white dark:bg-blue-800 dark:hover:bg-blue-900',
       ariaLabel: 'Telegram channel'
     },
     { 
       name: t('whatsapp'), 
       url: common('whatsappLink') || 'https://wa.me/+923412786433',
       icon: MessageCircle,
-      color: 'bg-green-700 hover:bg-green-800 text-white',
+      color: 'bg-green-700 hover:bg-green-800 text-white dark:bg-green-800 dark:hover:bg-green-900',
       ariaLabel: 'WhatsApp contact'
     }
   ];
 
-  // Dynamic quick links with locale
   const quickLinks = [
     { name: t('home'), href: `/${currentLocale}`, key: 'home' },
     { name: t('about'), href: `/${currentLocale}/about`, key: 'about' },
@@ -44,7 +41,6 @@ export default function Footer() {
     { name: t('contact'), href: `/${currentLocale}/contact`, key: 'contact' },
   ];
 
-  // Mission and vision based on locale
   const missionText = currentLocale === 'ur' 
     ? common('missionUrdu') 
     : common('missionEnglish') || t('defaultMission');
@@ -57,10 +53,9 @@ export default function Footer() {
     <footer className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-gray-900 text-white'} transition-colors duration-200`}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* About Section */}
           <div>
-            <h2 className="text-xl font-bold mb-4">{common('title')}</h2>
-            <p className="text-gray-300 mb-4">
+            <h2 className="text-xl font-bold mb-4 text-white">{common('title')}</h2>
+            <p className="text-gray-300 dark:text-gray-400 mb-4">
               {common('description') || t('defaultDescription')}
             </p>
             <div className="flex space-x-4">
@@ -80,15 +75,14 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">{t('quickLinks')}</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.key}>
                   <Link 
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-200 flex items-center"
+                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200 flex items-center"
                     aria-label={`Go to ${link.name}`}
                   >
                     <span>{link.name}</span>
@@ -101,17 +95,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-bold mb-4">{t('contact')}</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('contact')}</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-300 dark:text-gray-400 text-sm">
                     {common('addressUrdu')}
                   </p>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-300 dark:text-gray-400 text-sm">
                     {common('addressEnglish')}
                   </p>
                 </div>
@@ -121,7 +114,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`tel:${common('phone')}`}
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200"
                   aria-label={`Call ${common('phone')}`}
                 >
                   {common('phone')}
@@ -132,7 +125,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`mailto:${common('email')}`}
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200"
                   aria-label={`Email ${common('email')}`}
                 >
                   {common('email')}
@@ -141,21 +134,19 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Mission & Vision */}
           <div>
-            <h3 className="text-lg font-bold mb-4">{t('mission')}</h3>
-            <p className={`text-gray-300 mb-4 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('mission')}</h3>
+            <p className={`text-gray-300 dark:text-gray-400 mb-4 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {missionText}
             </p>
-            <h3 className="text-lg font-bold mb-4">{t('vision')}</h3>
-            <p className={`text-gray-300 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('vision')}</h3>
+            <p className={`text-gray-300 dark:text-gray-400 ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {visionText}
             </p>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <div className="border-t border-gray-800 dark:border-gray-800 mt-8 pt-8 text-center text-gray-400 dark:text-gray-500">
           <p>{t('copyright', { year: currentYear })}</p>
           <div className="flex items-center justify-center space-x-2 mt-2">
             <Heart className="w-3 h-3 text-red-500" aria-hidden="true" />
@@ -163,7 +154,7 @@ export default function Footer() {
               href="https://www.communities.pk/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-gray-400 hover:text-white transition-colors"
+              className="text-xs text-gray-500 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors"
               aria-label="Made by Communities.pk"
             >
               {t('madeBy')}

@@ -1,12 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useTheme } from '@/components/ui/ThemeProvider';
 import { Shield, Target, Globe, Users, BookOpen, Clock } from 'lucide-react';
 
 export default function HeroSection() {
   const t = useTranslations('Hero');
-  const { theme } = useTheme();
 
   const stats = [
     { icon: Clock, value: t('yearsActive'), label: t('yearsActive') },
@@ -20,19 +18,19 @@ export default function HeroSection() {
       description: t('missionDesc'),
       icon: Target,
       color: 'text-red-600 dark:text-red-400',
+      bgColor: 'bg-red-50 dark:bg-red-900/20',
     },
     {
       title: t('visionTitle'),
       description: t('visionDesc'),
       icon: Globe,
       color: 'text-blue-600 dark:text-blue-400',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
     },
   ];
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden" aria-label="Hero section">
-      <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black' : 'bg-white'}`} />
-      
+    <section className="relative py-16 md:py-24 overflow-hidden bg-white dark:bg-black transition-colors duration-200" aria-label="Hero section">
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 mb-4">
@@ -40,7 +38,6 @@ export default function HeroSection() {
             <span className="text-sm font-semibold">{t('subtitle')}</span>
           </div>
           
-          {/* ✅ FIXED: Proper H1 heading */}
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
             {t('title')}
           </h1>
@@ -76,11 +73,10 @@ export default function HeroSection() {
               className="group bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700 transition-all duration-300"
             >
               <div className="flex items-start space-x-4">
-                <div className={`p-3 rounded-xl bg-red-50 dark:bg-red-900/20 ${feature.color}`}>
+                <div className={`p-3 rounded-xl ${feature.bgColor} ${feature.color}`}>
                   <feature.icon className="w-8 h-8" aria-hidden="true" />
                 </div>
                 <div>
-                  {/* ✅ FIXED: Proper H2 headings */}
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                     {feature.title}
                   </h2>
@@ -96,7 +92,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#books"
-            className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors"
+            className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-semibold transition-colors"
             aria-label="Explore Resources"
           >
             <BookOpen className="w-5 h-5 mr-2" aria-hidden="true" />

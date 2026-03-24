@@ -39,7 +39,7 @@ export default function WhatsAppGroups() {
   };
 
   return (
-    <section className="py-20 px-4 bg-linear-to-b from-gray-900 to-black" aria-label="WhatsApp groups section">
+    <section className="py-20 px-4 bg-linear-to-b from-gray-900 to-black dark:from-gray-950 dark:to-black" aria-label="WhatsApp groups section">
       <div className="container mx-auto">
         {/* Header */}
         <motion.div
@@ -58,7 +58,7 @@ export default function WhatsAppGroups() {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-10">
+          <p className="text-xl text-gray-300 dark:text-gray-400 max-w-3xl mx-auto mb-10">
             {t('description')}
           </p>
         </motion.div>
@@ -74,7 +74,7 @@ export default function WhatsAppGroups() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <div className="relative p-6 bg-linear-to-br from-gray-900/50 to-black/50 rounded-2xl border border-white/5 hover:border-green-500/30 transition-all duration-500 h-full">
+              <div className="relative p-6 bg-linear-to-br from-gray-900/50 to-black/50 dark:from-gray-800/50 dark:to-gray-900/50 rounded-2xl border border-white/5 dark:border-gray-700/50 hover:border-green-500/30 transition-all duration-500 h-full">
                 {/* Active Badge */}
                 <div className="absolute -top-3 right-6">
                   <div className="px-3 py-1 bg-linear-to-r from-green-600 to-emerald-600 rounded-full text-xs font-bold text-white flex items-center gap-1">
@@ -97,11 +97,11 @@ export default function WhatsAppGroups() {
                   </div>
                   
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
+                    <h3 className="text-xl font-bold text-white dark:text-white mb-2 group-hover:text-green-400 transition-colors">
                       {group.name}
                     </h3>
                     <div className="flex items-center gap-3">
-                      <span className="inline-flex items-center gap-1 text-sm text-gray-400">
+                      <span className="inline-flex items-center gap-1 text-sm text-gray-300 dark:text-gray-400">
                         <Users className="w-4 h-4" aria-hidden="true" />
                         {group.members} {t('members')}
                       </span>
@@ -111,9 +111,9 @@ export default function WhatsAppGroups() {
 
                 {/* Link Section */}
                 <div className="space-y-4">
-                  <div className="p-3 bg-white/5 rounded-xl">
+                  <div className="p-3 bg-white/5 dark:bg-white/5 rounded-xl">
                     <div className="flex items-center justify-between">
-                      <code className="text-sm text-gray-400 font-mono truncate">
+                      <code className="text-sm text-gray-300 dark:text-gray-400 font-mono truncate">
                         {group.link}
                       </code>
                       <button
@@ -131,20 +131,20 @@ export default function WhatsAppGroups() {
                   </div>
 
                   {/* Action Buttons */}
-              <div className="flex gap-3">
-  <a
-    href={group.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex-1 group/btn"
-    aria-label={`Join ${group.name} - opens in new tab`}
-  >
-    <div className="flex items-center justify-center gap-2 px-4 py-3 bg-green-700 hover:bg-green-800 rounded-xl text-white font-medium transition-all duration-300">
-      <ExternalLink className="w-4 h-4" aria-hidden="true" />
-      {t('join')}
-    </div>
-  </a>
-</div>
+                  <div className="flex gap-3">
+                    <a
+                      href={group.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 group/btn"
+                      aria-label={`Join ${group.name} - opens in new tab`}
+                    >
+                      <div className="flex items-center justify-center gap-2 px-4 py-3 bg-green-700 hover:bg-green-800 dark:bg-green-800 dark:hover:bg-green-900 rounded-xl text-white font-medium transition-all duration-300">
+                        <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                        {t('join')}
+                      </div>
+                    </a>
+                  </div>
                 </div>
 
                 {/* Hover Effect Line */}

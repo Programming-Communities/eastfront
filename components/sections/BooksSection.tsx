@@ -1,12 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useTheme } from '@/components/ui/ThemeProvider';
-import { BookOpen, Download, Eye, FileText, Globe, Map } from 'lucide-react';
+import { BookOpen, FileText, Globe, Map } from 'lucide-react';
 
 export default function BooksSection() {
   const t = useTranslations('Books');
-  const { theme } = useTheme();
 
   const categories = [
     {
@@ -40,7 +38,7 @@ export default function BooksSection() {
   ];
 
   return (
-    <div className={`py-12 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="py-12 bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -61,7 +59,7 @@ export default function BooksSection() {
             >
               <div className="flex items-start space-x-4">
                 <div className={`p-3 rounded-lg ${category.color}`}>
-                  <category.icon className="w-6 h-6" />
+                  <category.icon className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
@@ -82,12 +80,13 @@ export default function BooksSection() {
         {/* Google Drive Link */}
         <div className="text-center">
           <a
-            href="https://drive.google.com/drive/folders/1YOUR_FOLDER_ID"
+            href="https://drive.google.com/drive/folders/1EWHtJ4CAjkGZ4_11r6EYshNoC09nZ4r5"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-semibold transition-colors"
+            aria-label="Open Google Drive folder - opens in new tab"
           >
-            <BookOpen className="w-5 h-5 mr-2" />
+            <BookOpen className="w-5 h-5 mr-2" aria-hidden="true" />
             {t('openGoogleDrive')}
           </a>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
@@ -97,7 +96,7 @@ export default function BooksSection() {
 
         {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 rounded-xl">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               200+
             </div>
@@ -105,7 +104,7 @@ export default function BooksSection() {
               {t('totalResources')}
             </div>
           </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 rounded-xl">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               5
             </div>
@@ -113,7 +112,7 @@ export default function BooksSection() {
               {t('languages')}
             </div>
           </div>
-          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 rounded-xl">
+          <div className="text-center p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               24/7
             </div>
