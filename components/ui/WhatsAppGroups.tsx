@@ -5,7 +5,7 @@ import { MessageCircle, Users, Copy, Check, ExternalLink, Shield } from 'lucide-
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-// All 19 WhatsApp Groups - ALL HAVE 1000+ MEMBERS
+// Updated to 25 groups with working links
 const whatsappGroupsData = [
   { id: 1, name: 'EastFront PK Group 1', members: '1000+', link: 'https://chat.whatsapp.com/GZJmBmUDH6TAWGs4suTI8R' },
   { id: 2, name: 'EastFront PK Group 2', members: '1000+', link: 'https://chat.whatsapp.com/HRr6iYtcC0q7eWiHu72Nkw' },
@@ -26,6 +26,11 @@ const whatsappGroupsData = [
   { id: 17, name: 'EastFront PK Group 17', members: '1000+', link: 'https://chat.whatsapp.com/GzraA5uELGpDDK9PKMNYul' },
   { id: 18, name: 'EastFront PK Group 18', members: '1000+', link: 'https://chat.whatsapp.com/GRsOxck2R8U3MVBOQoER3n' },
   { id: 19, name: 'EastFront PK Group 19', members: '1000+', link: 'https://chat.whatsapp.com/Bs8DJyVTnHe102x1pluu4O' },
+  { id: 20, name: 'EastFront PK Group 20', members: '1000+', link: 'https://chat.whatsapp.com/FU0Wu01qaxIKhoFzMOvrYy' },
+  { id: 21, name: 'EastFront PK Group 21', members: '1000+', link: 'https://chat.whatsapp.com/IyFo5VHrJ26CCaQIjMlRq0' },
+  { id: 22, name: 'EastFront PK Group 22', members: '1000+', link: 'https://chat.whatsapp.com/Fkd0yMJmsuVJBhg1TXJDbb' },
+  { id: 23, name: 'EastFront PK Group 23', members: '1000+', link: 'https://chat.whatsapp.com/LfVFQDUgbGdKnw8BiF2Dkr' },
+  { id: 24, name: 'EastFront PK Group 24', members: '1000+', link: 'https://chat.whatsapp.com/KmicCtxpxGd0IzpBpHKXS9' },
 ];
 
 export default function WhatsAppGroups() {
@@ -41,7 +46,6 @@ export default function WhatsAppGroups() {
   return (
     <section className="py-20 px-4 bg-linear-to-b from-gray-900 to-black dark:from-gray-950 dark:to-black" aria-label="WhatsApp groups section">
       <div className="container mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,19 +67,17 @@ export default function WhatsAppGroups() {
           </p>
         </motion.div>
 
-        {/* Groups Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {whatsappGroupsData.map((group, index) => (
             <motion.div
               key={group.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.03 }}
+              transition={{ delay: Math.min(index * 0.03, 0.5) }}
               whileHover={{ y: -5 }}
               className="group"
             >
               <div className="relative p-6 bg-linear-to-br from-gray-900/50 to-black/50 dark:from-gray-800/50 dark:to-gray-900/50 rounded-2xl border border-white/5 dark:border-gray-700/50 hover:border-green-500/30 transition-all duration-500 h-full">
-                {/* Active Badge */}
                 <div className="absolute -top-3 right-6">
                   <div className="px-3 py-1 bg-linear-to-r from-green-600 to-emerald-600 rounded-full text-xs font-bold text-white flex items-center gap-1">
                     <div className="w-2 h-2 bg-white rounded-full animate-pulse" aria-hidden="true" />
@@ -83,14 +85,12 @@ export default function WhatsAppGroups() {
                   </div>
                 </div>
 
-                {/* Group Number Badge */}
                 <div className="absolute -top-3 -right-3">
                   <div className="w-10 h-10 rounded-full bg-linear-to-r from-green-600 to-emerald-600 flex items-center justify-center shadow-lg">
                     <span className="font-bold text-white text-lg">{group.id}</span>
                   </div>
                 </div>
 
-                {/* Header */}
                 <div className="flex items-start gap-4 mb-6 mt-4">
                   <div className="w-14 h-14 rounded-xl bg-linear-to-br from-green-500 to-emerald-600 flex items-center justify-center shrink-0">
                     <Shield className="w-7 h-7 text-white" aria-hidden="true" />
@@ -109,7 +109,6 @@ export default function WhatsAppGroups() {
                   </div>
                 </div>
 
-                {/* Link Section */}
                 <div className="space-y-4">
                   <div className="p-3 bg-white/5 dark:bg-white/5 rounded-xl">
                     <div className="flex items-center justify-between">
@@ -130,7 +129,6 @@ export default function WhatsAppGroups() {
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="flex gap-3">
                     <a
                       href={group.link}
@@ -147,7 +145,6 @@ export default function WhatsAppGroups() {
                   </div>
                 </div>
 
-                {/* Hover Effect Line */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-green-500 to-emerald-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
             </motion.div>
