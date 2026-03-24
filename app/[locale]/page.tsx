@@ -5,7 +5,6 @@ import HeroSection from '@/components/sections/Hero';
 import BooksSection from '@/components/sections/BooksSection';
 import WhatsAppGroups from '@/components/ui/WhatsAppGroups';
 
-
 export default function HomePage() {
   const t = useTranslations('Hero');
   const booksT = useTranslations('Books');
@@ -36,8 +35,6 @@ export default function HomePage() {
           <WhatsAppGroups />
         </div>
       </section>
-
-    
     </div>
   );
 }

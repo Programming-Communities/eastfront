@@ -146,7 +146,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const metadata = getPageMetadata(locale);
+  
+  // Get the current path from the URL - this is important for canonical
   const currentUrl = `${baseUrl}/${locale}`;
+  
+  // For nested pages, we need to get the full path
+  // This will be handled by the page component's own metadata
 
   return {
     metadataBase: new URL(baseUrl),
@@ -157,7 +162,7 @@ export async function generateMetadata({
     description: metadata.description,
     keywords: metadata.keywords,
     
-    // ✅ FIXED: Open Graph with better image optimization
+    // ✅ FIXED: Open Graph with correct URL
     openGraph: {
       type: 'website',
       locale: metadata.ogLocale,
