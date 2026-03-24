@@ -131,15 +131,15 @@ export default function WhatsAppGroups() {
                   </div>
 
                   {/* Action Buttons */}
-<div className="flex gap-3">
+              <div className="flex gap-3">
   <a
     href={group.link}
     target="_blank"
     rel="noopener noreferrer"
     className="flex-1 group/btn"
-    aria-label={`Join ${group.name}`}
+    aria-label={`Join ${group.name} - opens in new tab`}
   >
-    <div className="flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 rounded-xl text-white font-medium transition-all duration-300">
+    <div className="flex items-center justify-center gap-2 px-4 py-3 bg-green-700 hover:bg-green-800 rounded-xl text-white font-medium transition-all duration-300">
       <ExternalLink className="w-4 h-4" aria-hidden="true" />
       {t('join')}
     </div>
