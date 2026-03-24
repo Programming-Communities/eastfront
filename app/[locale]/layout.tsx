@@ -10,10 +10,10 @@ import { ThemeProvider } from '@/components/ui/ThemeProvider';
 // ✅ OPTIMIZED: Subset fonts for faster loading
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap', // ✅ FCP fix
-  preload: true, // ✅ Preload font
+  display: 'swap',
+  preload: true,
   variable: '--font-inter',
-  weight: ['400', '500', '600', '700'], // ✅ Only needed weights
+  weight: ['400', '500', '600', '700'],
 });
 
 // Base URL configuration
@@ -167,7 +167,7 @@ export async function generateMetadata({
       siteName: metadata.siteName,
       images: [
         {
-          url: `${baseUrl}/logo-1200x630.jpg`, // ✅ Pre-sized social image
+          url: `${baseUrl}/logo-1200x630.jpg`,
           width: 1200,
           height: 630,
           alt: metadata.title,
@@ -263,33 +263,32 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   const { dir } = localeConfig[locale as keyof typeof localeConfig] || localeConfig.en;
 
   return (
-  <html 
-    lang={locale} 
-    dir={dir} 
-    suppressHydrationWarning
-    className={`${inter.variable}`}
-  >
-    <head>
-      {/* ... keep existing head content ... */}
-    </head>
-    <body 
-      className={`${inter.className} bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-200 min-h-screen flex flex-col`}
+    <html 
+      lang={locale} 
+      dir={dir} 
       suppressHydrationWarning
+      className={`${inter.variable}`}
     >
-      <NextIntlClientProvider messages={messages}>
-        {/* ✅ ADD THEME PROVIDER HERE */}
-        <ThemeProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </NextIntlClientProvider>
-      {/* ... rest of body content ... */}
-    </body>
-  </html>
-);
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body 
+        className={`${inter.className} bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-200 min-h-screen flex flex-col`}
+        suppressHydrationWarning
+      >
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
 }

@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <div className="dark:bg-black transition-colors duration-200">
       {/* Hero Section */}
-      <section id="hero" className="dark:bg-gradient-to-b dark:from-black dark:to-gray-900">
+      <section id="hero" className="dark:bg-linear-to-b dark:from-black dark:to-gray-900">
         <HeroSection />
       </section>
 
@@ -37,22 +37,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-16 dark:bg-gray-900">
-        <ContactSection />
-      </section>
-
-      {/* Dark Mode Test Section */}
-      <div className="hidden dark:flex items-center justify-center py-8">
-        <div className="text-center">
-          <p className="text-green-500 text-sm font-medium">
-            🌙 Dark Mode Activated
-          </p>
-          <p className="text-gray-400 text-xs mt-1">
-            Theme is working perfectly across all sections
-          </p>
-        </div>
-      </div>
+    
     </div>
   );
 }

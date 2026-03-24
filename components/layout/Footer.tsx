@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MapPin, Phone, Mail, ExternalLink, Send, MessageCircle, Globe } from 'lucide-react';
+import { MapPin, Phone, Mail, ExternalLink, Send, MessageCircle, Heart } from 'lucide-react';
 import { useTheme } from '@/components/ui/ThemeProvider';
 
 export default function Footer() {
@@ -13,7 +13,7 @@ export default function Footer() {
   const { theme } = useTheme();
   
   // Get current locale from pathname
-  const currentLocale = pathname.split('/')[1] || 'ur';
+  const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
   // Dynamic social links with translations
@@ -105,7 +105,7 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" />
                 <div>
-                  <p className="text-gray-400 dark:text-gray-300 text-sm font-urdu">
+                  <p className="text-gray-400 dark:text-gray-300 text-sm">
                     {common('addressUrdu')}
                   </p>
                   <p className="text-gray-400 dark:text-gray-300 text-sm">
@@ -149,22 +149,27 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright - Dynamic */}
-        <div className="border-t border-gray-800 dark:border-gray-700 mt-8 pt-8 text-center text-gray-400 dark:text-gray-300">
-          <p>{t('copyright', { year: currentYear })}</p>
-          <p className="text-sm mt-2">
-            {common('editorialNote') || t('editorial')}
-          </p>
-          <div className="flex items-center justify-center space-x-2 mt-1 opacity-75">
-            <Globe className="w-3 h-3" />
-            <p className="text-xs">
-              {t('language')}: {currentLocale.toUpperCase()} | {t('version')}: 1.0.0
-            </p>
+        {/* Copyright and Made By Section */}
+        <div className="border-t border-gray-800 dark:border-gray-700 mt-8 pt-8">
+          {/* Main Copyright */}
+          <div className="text-center text-gray-400 dark:text-gray-300 mb-3">
+            <p>{t('copyright', { year: currentYear })}</p>
           </div>
-          <div className="mt-2">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Theme: {theme === 'dark' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-            </span>
+          
+          {/* Made By Section with Link */}
+          <div className="text-center">
+            <a
+              href="https://www.communities.pk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 group"
+            >
+              <Heart className="w-4 h-4 text-red-500 group-hover:scale-110 transition-transform duration-300" />
+              <span className="text-sm text-gray-400 group-hover:text-white transition-colors duration-300">
+                {t('madeBy')}
+              </span>
+              <ExternalLink className="w-3 h-3 text-gray-500 group-hover:text-white transition-colors duration-300" />
+            </a>
           </div>
         </div>
       </div>

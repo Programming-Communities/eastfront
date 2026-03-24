@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,9 +14,14 @@ export default function Header() {
   const common = useTranslations('Common');
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Get current locale from pathname
-  const currentLocale = pathname.split('/')[1] || 'ur';
+  const currentLocale = pathname?.split('/')[1] || 'ur';
 
   // Dynamic navigation items
   const navItems = [
@@ -60,6 +65,7 @@ export default function Header() {
 
   // Check if a link is active
   const isActive = (href: string) => {
+    if (!pathname) return false;
     if (href === `/${currentLocale}`) {
       return pathname === `/${currentLocale}`;
     }
@@ -73,14 +79,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo with Image - Dynamic alt text */}
+          {/* Logo with Image - Fixed hydration issue */}
           <Link href={`/${currentLocale}`} className="flex items-center space-x-3 group">
-            <div className="relative w-12 h-12">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                {/* Fallback EF text if image fails */}
+            <div className="relative w-12 h-12 shrink-0">
+              {/* Fallback EF text if image fails */}
+              <div className="absolute inset-0 bg-linear-to-r from-red-600 to-red-800 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 <span className="text-white font-bold text-lg">EF</span>
               </div>
-              {/* Logo Image */}
+              {/* Logo Image - Fixed with unoptimized for hydration */}
               <div className="relative w-12 h-12">
                 <Image
                   src="/logo.jpg"
@@ -89,6 +95,7 @@ export default function Header() {
                   className="object-contain rounded-lg"
                   sizes="48px"
                   priority
+                  unoptimized={!mounted}
                 />
               </div>
             </div>
@@ -159,18 +166,6 @@ export default function Header() {
                   </span>
                 </Link>
               ))}
-              
-              {/* Mobile Theme Toggle */}
-              <div className="p-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Theme:</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {document.documentElement.classList.contains('dark') ? 'Dark' : 'Light'}
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         )}

@@ -13,22 +13,26 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // ✅ START WITH UNDEFINED to prevent hydration mismatch
   const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
+  // Apply theme to document
+  const applyTheme = (newTheme: Theme) => {
+    const root = document.documentElement;
+    if (newTheme === 'dark') {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+    } else {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+    }
+  };
+
+  // Initialize theme on mount only
   useEffect(() => {
     setMounted(true);
     
-    // Check system preference safely
-    let prefersDark = false;
-    try {
-      prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    } catch (e) {
-      prefersDark = false;
-    }
-    
-    // Check localStorage safely
+    // Check localStorage first
     let savedTheme: Theme | null = null;
     try {
       const stored = localStorage.getItem('theme');
@@ -39,30 +43,43 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // Ignore localStorage errors
     }
     
-    // Determine initial theme
-    let initialTheme: Theme = prefersDark ? 'dark' : 'light';
-    if (savedTheme) {
-      initialTheme = savedTheme;
+    // Check system preference if no saved theme
+    let systemTheme: Theme = 'light';
+    if (!savedTheme) {
+      try {
+        systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      } catch (e) {
+        systemTheme = 'light';
+      }
     }
     
+    const initialTheme = savedTheme || systemTheme;
     setThemeState(initialTheme);
     applyTheme(initialTheme);
   }, []);
 
-  const applyTheme = (theme: Theme) => {
-    try {
-      const root = document.documentElement;
-      if (theme === 'dark') {
-        root.classList.add('dark');
-        root.style.colorScheme = 'dark';
-      } else {
-        root.classList.remove('dark');
-        root.style.colorScheme = 'light';
+  // Listen for system theme changes
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only update if no saved preference
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (!savedTheme) {
+          const newTheme = e.matches ? 'dark' : 'light';
+          setThemeState(newTheme);
+          applyTheme(newTheme);
+        }
+      } catch (e) {
+        // Ignore
       }
-    } catch (e) {
-      // Ignore errors
-    }
-  };
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [mounted]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
@@ -79,19 +96,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(newTheme);
   };
 
-  // ✅ CRITICAL: Return SAME structure during SSR and CSR
-  // Don't return loading state - just return children with fallback
-  
+  // Prevent hydration mismatch - render nothing until mounted
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={{ theme: 'light', toggleTheme, setTheme }}>
+        <div className="min-h-screen" style={{ visibility: 'hidden' }}>
+          {children}
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      {/* ✅ Add a wrapper div that's always present */}
-      <div className={`min-h-screen ${mounted ? '' : 'invisible'}`}>
-        {mounted ? children : (
-          // ✅ Empty placeholder with same dimensions
-          <div style={{ visibility: 'hidden' }}>
-            {children}
-          </div>
-        )}
+      <div className="min-h-screen">
+        {children}
       </div>
     </ThemeContext.Provider>
   );

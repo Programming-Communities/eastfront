@@ -1,4 +1,3 @@
-// lib/i18n.ts - COMPLETE WORKING VERSION
 export const locales = ['en', 'ur', 'hi', 'fa', 'ar'] as const;
 export const defaultLocale = 'ur' as const;
 

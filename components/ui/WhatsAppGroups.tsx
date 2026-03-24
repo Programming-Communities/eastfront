@@ -1,18 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MessageCircle, Users, Copy, Check, ExternalLink, Shield, Award } from 'lucide-react';
-import { useState } from 'react';
+import { MessageCircle, Users, Copy, Check, ExternalLink, Shield, Search } from 'lucide-react';
+import { useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
-const whatsappGroups = [
+// WhatsApp groups data with dynamic structure
+const whatsappGroupsData = [
   { 
     id: 1, 
     name: 'EastFront PK Group 1', 
     members: '250+',
     description: 'Main discussion group for Islamic resistance',
     link: 'https://chat.whatsapp.com/GZJmBmUDH6TAWGs4suTI8R',
-    tags: ['Core', 'Active']
+    tags: ['Core', 'Active'],
+    category: 'General'
   },
   { 
     id: 2, 
@@ -20,7 +22,8 @@ const whatsappGroups = [
     members: '200+',
     description: 'Political analysis and discussions',
     link: 'https://chat.whatsapp.com/HRr6iYtcC0q7eWiHu72Nkw',
-    tags: ['Politics', 'Active']
+    tags: ['Politics', 'Active'],
+    category: 'Analysis'
   },
   { 
     id: 3, 
@@ -28,7 +31,8 @@ const whatsappGroups = [
     members: '180+',
     description: 'Military strategy and defense',
     link: 'https://chat.whatsapp.com/C57s4pVkQL34rZcGKLcjew',
-    tags: ['Military', 'Active']
+    tags: ['Military', 'Active'],
+    category: 'Strategy'
   },
   { 
     id: 4, 
@@ -36,7 +40,8 @@ const whatsappGroups = [
     members: '150+',
     description: 'Geopolitical analysis',
     link: 'https://chat.whatsapp.com/EMtO1UNopT85FqvVoYqWch',
-    tags: ['Geopolitics']
+    tags: ['Geopolitics'],
+    category: 'Analysis'
   },
   { 
     id: 5, 
@@ -44,7 +49,8 @@ const whatsappGroups = [
     members: '220+',
     description: 'Diplomatic relations study',
     link: 'https://chat.whatsapp.com/BQYftgpkz3z3qbLiCtcix4',
-    tags: ['Diplomacy', 'Active']
+    tags: ['Diplomacy', 'Active'],
+    category: 'Diplomacy'
   },
   { 
     id: 6, 
@@ -52,7 +58,8 @@ const whatsappGroups = [
     members: '190+',
     description: 'Islamic history research',
     link: 'https://chat.whatsapp.com/EofDsqhArOELiKMhPXXYUh',
-    tags: ['History']
+    tags: ['History'],
+    category: 'Research'
   },
   { 
     id: 7, 
@@ -60,7 +67,8 @@ const whatsappGroups = [
     members: '170+',
     description: 'News and updates 24/7',
     link: 'https://chat.whatsapp.com/DSOivpJVhzI8ckG3rDtwjM',
-    tags: ['News', 'Active']
+    tags: ['News', 'Active'],
+    category: 'News'
   },
   { 
     id: 8, 
@@ -68,7 +76,8 @@ const whatsappGroups = [
     members: '160+',
     description: 'Research papers discussion',
     link: 'https://chat.whatsapp.com/DNeEppkyJteAzyKPpju0hO',
-    tags: ['Research']
+    tags: ['Research'],
+    category: 'Research'
   },
   { 
     id: 9, 
@@ -76,7 +85,8 @@ const whatsappGroups = [
     members: '140+',
     description: 'Strategic planning',
     link: 'https://chat.whatsapp.com/DW78PRSHV865KauAAzS9tj',
-    tags: ['Strategy']
+    tags: ['Strategy'],
+    category: 'Strategy'
   },
   { 
     id: 10, 
@@ -84,7 +94,8 @@ const whatsappGroups = [
     members: '130+',
     description: 'Middle East analysis',
     link: 'https://chat.whatsapp.com/G4Wmb3MwoWc3JaekTXFQ7j',
-    tags: ['MiddleEast']
+    tags: ['MiddleEast'],
+    category: 'Analysis'
   },
   { 
     id: 11, 
@@ -92,7 +103,8 @@ const whatsappGroups = [
     members: '120+',
     description: 'Defense technology',
     link: 'https://chat.whatsapp.com/LjXk4Clg2ME2f72v5NyuI7',
-    tags: ['Technology']
+    tags: ['Technology'],
+    category: 'Technology'
   },
   { 
     id: 12, 
@@ -100,7 +112,8 @@ const whatsappGroups = [
     members: '110+',
     description: 'International relations',
     link: 'https://chat.whatsapp.com/DWkpnsHLpfP2tQ16GeFX7G',
-    tags: ['International']
+    tags: ['International'],
+    category: 'Diplomacy'
   },
   { 
     id: 13, 
@@ -108,7 +121,8 @@ const whatsappGroups = [
     members: '100+',
     description: 'Security studies',
     link: 'https://chat.whatsapp.com/FiItr3p2WHTKrThc1uZuKA',
-    tags: ['Security']
+    tags: ['Security'],
+    category: 'Security'
   },
   { 
     id: 14, 
@@ -116,7 +130,8 @@ const whatsappGroups = [
     members: '90+',
     description: 'Conflict analysis',
     link: 'https://chat.whatsapp.com/FUYQFooJepU2MgohEOrkMR',
-    tags: ['Conflict']
+    tags: ['Conflict'],
+    category: 'Analysis'
   },
   { 
     id: 15, 
@@ -124,7 +139,8 @@ const whatsappGroups = [
     members: '80+',
     description: 'Peace and security',
     link: 'https://chat.whatsapp.com/Ef46pt8FUITJukbJOsL15t',
-    tags: ['Peace']
+    tags: ['Peace'],
+    category: 'Peace'
   },
   { 
     id: 16, 
@@ -132,7 +148,8 @@ const whatsappGroups = [
     members: '70+',
     description: 'Regional cooperation',
     link: 'https://chat.whatsapp.com/E3SqPJ6ES4PDaRjQfD2XSh',
-    tags: ['Regional']
+    tags: ['Regional'],
+    category: 'Cooperation'
   },
   { 
     id: 17, 
@@ -140,7 +157,8 @@ const whatsappGroups = [
     members: '60+',
     description: 'Strategic partnerships',
     link: 'https://chat.whatsapp.com/GzraA5uELGpDDK9PKMNYul',
-    tags: ['Partnerships']
+    tags: ['Partnerships'],
+    category: 'Partnership'
   },
   { 
     id: 18, 
@@ -148,7 +166,8 @@ const whatsappGroups = [
     members: '50+',
     description: 'Future projections',
     link: 'https://chat.whatsapp.com/GRsOxck2R8U3MVBOQoER3n',
-    tags: ['Future']
+    tags: ['Future'],
+    category: 'Future'
   },
 ];
 
@@ -156,6 +175,7 @@ export default function WhatsAppGroups() {
   const t = useTranslations('WhatsApp');
   const [copiedLink, setCopiedLink] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -163,12 +183,55 @@ export default function WhatsAppGroups() {
     setTimeout(() => setCopiedLink(null), 2000);
   };
 
-  const filteredGroups = activeFilter === 'all' 
-    ? whatsappGroups 
-    : whatsappGroups.filter(group => group.tags.includes(activeFilter));
+  // Get unique categories for filters
+  const categories = useMemo(() => {
+    const cats = ['all', ...new Set(whatsappGroupsData.map(group => group.category))];
+    return cats;
+  }, []);
+
+  // Get unique tags for filter badges
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    whatsappGroupsData.forEach(group => {
+      group.tags.forEach(tag => tags.add(tag));
+    });
+    return ['all', ...Array.from(tags)];
+  }, []);
+
+  // Filter groups based on active filter and search query
+  const filteredGroups = useMemo(() => {
+    let filtered = whatsappGroupsData;
+    
+    // Filter by category or tag
+    if (activeFilter !== 'all') {
+      filtered = filtered.filter(group => 
+        group.category === activeFilter || group.tags.includes(activeFilter)
+      );
+    }
+    
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(group =>
+        group.name.toLowerCase().includes(query) ||
+        group.description.toLowerCase().includes(query) ||
+        group.tags.some(tag => tag.toLowerCase().includes(query))
+      );
+    }
+    
+    return filtered;
+  }, [activeFilter, searchQuery]);
+
+  // Calculate stats
+  const totalGroups = whatsappGroupsData.length;
+  const activeGroups = whatsappGroupsData.filter(g => g.tags.includes('Active')).length;
+  const totalMembers = whatsappGroupsData.reduce((sum, g) => {
+    const members = parseInt(g.members);
+    return sum + (isNaN(members) ? 0 : members);
+  }, 0);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
+    <section className="py-20 px-4 bg-linear-to-b from-gray-900 to-black">
       <div className="container mx-auto">
         {/* Header */}
         <motion.div
@@ -178,32 +241,63 @@ export default function WhatsAppGroups() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
             <MessageCircle className="w-4 h-4 text-green-400" />
-            <span className="text-sm font-medium text-green-400">Active Community</span>
+            <span className="text-sm font-medium text-green-400">{t('community')}</span>
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-              WhatsApp Community
+            <span className="bg-linear-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+              {t('title')}
             </span>
           </h2>
           
           <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-10">
-            Join our exclusive WhatsApp groups for real-time discussions, analysis, and updates
+            {t('description')}
           </p>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-3 justify-center mb-12">
-            {['all', 'Active', 'Premium', 'Research', 'Military', 'Core'].map((filter) => (
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto mb-8">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder={t('searchPlaceholder')}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-green-500 transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* Category Filters */}
+          <div className="flex flex-wrap gap-3 justify-center mb-6">
+            {categories.map((category) => (
               <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
+                key={category}
+                onClick={() => setActiveFilter(category)}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeFilter === filter
+                  activeFilter === category
                     ? 'bg-green-500 text-white'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                {filter === 'all' ? 'All Groups' : filter}
+                {category === 'all' ? t('allGroups') : category}
+              </button>
+            ))}
+          </div>
+
+          {/* Tag Filters */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {allTags.slice(0, 8).map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setActiveFilter(tag === activeFilter ? 'all' : tag)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                  activeFilter === tag
+                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                }`}
+              >
+                {tag}
               </button>
             ))}
           </div>
@@ -216,24 +310,24 @@ export default function WhatsAppGroups() {
               key={group.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
               whileHover={{ y: -5 }}
               className="group"
             >
-              <div className="relative p-6 bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl border border-white/5 hover:border-green-500/30 transition-all duration-500 h-full">
+              <div className="relative p-6 bg-linear-to-br from-gray-900/50 to-black/50 rounded-2xl border border-white/5 hover:border-green-500/30 transition-all duration-500 h-full">
                 {/* Badge */}
-                {group.tags.includes('Premium') && (
+                {group.tags.includes('Active') && (
                   <div className="absolute -top-3 right-6">
-                    <div className="px-3 py-1 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-full text-xs font-bold text-white flex items-center gap-1">
-                      <Award className="w-3 h-3" />
-                      PREMIUM
+                    <div className="px-3 py-1 bg-linear-to-r from-green-600 to-emerald-600 rounded-full text-xs font-bold text-white flex items-center gap-1">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                      {t('active')}
                     </div>
                   </div>
                 )}
 
                 {/* Header */}
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-linear-to-br from-green-500 to-emerald-600 flex items-center justify-center shrink-0">
                     {group.tags.includes('Core') ? (
                       <Shield className="w-7 h-7 text-white" />
                     ) : (
@@ -248,14 +342,8 @@ export default function WhatsAppGroups() {
                     <div className="flex items-center gap-3">
                       <span className="inline-flex items-center gap-1 text-sm text-gray-400">
                         <Users className="w-4 h-4" />
-                        {group.members} members
+                        {group.members} {t('members')}
                       </span>
-                      {group.tags.includes('Active') && (
-                        <span className="inline-flex items-center gap-1 text-sm text-green-400">
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          Live
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -271,9 +359,7 @@ export default function WhatsAppGroups() {
                     <span
                       key={idx}
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        tag === 'Premium'
-                          ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                          : tag === 'Active'
+                        tag === 'Active'
                           ? 'bg-green-500/10 text-green-400 border border-green-500/20'
                           : 'bg-white/5 text-gray-400 border border-white/10'
                       }`}
@@ -312,9 +398,9 @@ export default function WhatsAppGroups() {
                       rel="noopener noreferrer"
                       className="flex-1 group/btn"
                     >
-                      <div className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl text-white font-medium hover:from-green-700 hover:to-emerald-700 transition-all duration-300 group-hover/btn:scale-105">
+                      <div className="flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-green-600 to-emerald-600 rounded-xl text-white font-medium hover:from-green-700 hover:to-emerald-700 transition-all duration-300 group-hover/btn:scale-105">
                         <ExternalLink className="w-4 h-4" />
-                        Join Group
+                        {t('join')}
                       </div>
                     </a>
                     
@@ -333,41 +419,55 @@ export default function WhatsAppGroups() {
           ))}
         </div>
 
+        {/* No Results Message */}
+        {filteredGroups.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">{t('noGroupsFound')}</p>
+            <button
+              onClick={() => {
+                setActiveFilter('all');
+                setSearchQuery('');
+              }}
+              className="mt-4 px-6 py-2 bg-white/10 rounded-lg text-white hover:bg-white/20 transition-colors"
+            >
+              {t('clearFilters')}
+            </button>
+          </div>
+        )}
+
         {/* Stats CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="mt-16 max-w-4xl mx-auto"
         >
-          <div className="relative p-8 rounded-2xl bg-gradient-to-r from-gray-900/50 to-black/50 border border-white/5 overflow-hidden">
-            {/* Pattern Background */}
-            <div className="absolute inset-0 opacity-[0.03]">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-              }} />
-            </div>
-
-            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-              <div className="text-center md:text-left">
-                <div className="text-4xl font-bold text-white mb-2">18+</div>
-                <div className="text-gray-400">Active Groups</div>
+          <div className="relative p-8 rounded-2xl bg-linear-to-r from-gray-900/50 to-black/50 border border-white/5 overflow-hidden">
+            <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white mb-2">{totalGroups}+</div>
+                <div className="text-gray-400">{t('totalGroups')}</div>
               </div>
               
               <div className="text-center">
-                <div className="text-4xl font-bold text-white mb-2">2K+</div>
-                <div className="text-gray-400">Active Members</div>
+                <div className="text-4xl font-bold text-white mb-2">{activeGroups}+</div>
+                <div className="text-gray-400">{t('activeGroups')}</div>
               </div>
               
-              <div className="text-center md:text-right">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white mb-2">{totalMembers.toLocaleString()}+</div>
+                <div className="text-gray-400">{t('totalMembers')}</div>
+              </div>
+              
+              <div className="text-center">
                 <a
                   href="https://wa.me/+923412786433"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/cta"
+                  className="group/cta inline-block"
                 >
-                  <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl text-white font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-green-500/20 group-hover/cta:shadow-xl group-hover/cta:shadow-green-500/30">
+                  <div className="inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-green-600 to-emerald-600 rounded-xl text-white font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-green-500/20 group-hover/cta:shadow-xl group-hover/cta:shadow-green-500/30">
                     <MessageCircle className="w-5 h-5" />
-                    <span>Contact Admin</span>
+                    <span>{t('contactAdmin')}</span>
                   </div>
                 </a>
               </div>

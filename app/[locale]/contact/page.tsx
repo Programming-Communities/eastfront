@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { MapPin, Phone, Mail, Send, MessageSquare, Globe, Clock, User, Globe as GlobeIcon } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageSquare, Globe, Clock, User } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ContactSection() {
@@ -18,7 +18,7 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Dynamic contact info - all from translations
+  // Contact Info Cards
   const contactInfo = [
     {
       icon: MapPin,
@@ -27,7 +27,7 @@ export default function ContactSection() {
       subtitleKey: 'addressSubtitle',
       color: 'text-red-500',
       bgColor: 'bg-red-500/10',
-      linkKey: 'addressLink'
+      link: null
     },
     {
       icon: Phone,
@@ -36,7 +36,7 @@ export default function ContactSection() {
       subtitleKey: 'phoneSubtitle',
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
-      linkKey: 'phoneLink'
+      link: `tel:${common('phone')}`
     },
     {
       icon: Mail,
@@ -45,7 +45,7 @@ export default function ContactSection() {
       subtitleKey: 'emailSubtitle',
       color: 'text-blue-500',
       bgColor: 'bg-blue-500/10',
-      linkKey: 'emailLink'
+      link: `mailto:${common('email')}`
     },
     {
       icon: Clock,
@@ -54,29 +54,29 @@ export default function ContactSection() {
       subtitleKey: 'workingHoursSubtitle',
       color: 'text-amber-500',
       bgColor: 'bg-amber-500/10',
-      linkKey: null
+      link: null
     }
   ];
 
-  // Dynamic social links - all from translations
+  // Social Links
   const socialLinks = [
     {
       nameKey: 'telegramName',
-      urlKey: 'telegramLink',
+      url: common('telegramLink'),
       icon: Send,
       color: 'bg-blue-600 hover:bg-blue-700',
       descriptionKey: 'telegramDescription'
     },
     {
       nameKey: 'whatsappName',
-      urlKey: 'whatsappLink',
+      url: common('whatsappLink'),
       icon: MessageSquare,
       color: 'bg-green-600 hover:bg-green-700',
       descriptionKey: 'whatsappDescription'
     }
   ];
 
-  // Dynamic form subjects - from translations
+  // Subject Options
   const subjectOptions = [
     { value: 'general', labelKey: 'subjectGeneral' },
     { value: 'support', labelKey: 'subjectSupport' },
@@ -93,37 +93,67 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // MAILTO FUNCTION - Opens email client with pre-filled data
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus('idle');
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Here you would typically send data to your backend
-      // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      
-      // Reset success message
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (error) {
+    // Validate form
+    if (!formData.name.trim()) {
       setSubmitStatus('error');
-    } finally {
       setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+      return;
     }
-  };
+    
+    if (!formData.email.trim() || !formData.email.includes('@')) {
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+      return;
+    }
+    
+    if (!formData.message.trim()) {
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+      return;
+    }
 
-  // Helper function to get link URLs
-  const getLinkUrl = (linkKey: string | null) => {
-    if (!linkKey) return '#';
-    if (linkKey === 'addressLink') return `https://maps.google.com/?q=${encodeURIComponent(t('location'))}`;
-    if (linkKey === 'phoneLink') return `tel:${t('phoneNumber')}`;
-    if (linkKey === 'emailLink') return `mailto:${t('emailAddress')}`;
-    return t(linkKey as any);
+    // Prepare email content
+    const toEmails = ['eastfront13@gmail.com', 'info@eastfront.pk'];
+    const subject = `Contact Form: ${formData.subject || 'General Inquiry'} from ${formData.name}`;
+    
+    const body = `
+Dear EastFront PK Team,
+
+I am contacting you regarding: ${formData.subject || 'General Inquiry'}
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+
+Message:
+${formData.message}
+
+----------------------------------------
+Sent from EastFront PK Contact Form
+Date: ${new Date().toLocaleString('en-PK', { timeZone: 'Asia/Karachi' })}
+    `;
+
+    // Create mailto link
+    const mailtoLink = `mailto:${toEmails.join(',')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open user's email client
+    window.location.href = mailtoLink;
+    
+    // Show success message and reset form
+    setSubmitStatus('success');
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setIsSubmitting(false);
+    
+    // Reset success message after 5 seconds
+    setTimeout(() => setSubmitStatus('idle'), 5000);
   };
 
   return (
@@ -154,20 +184,20 @@ export default function ContactSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Information Cards - Dynamic */}
+          {/* Contact Information Cards */}
           <div className="lg:col-span-1 space-y-6">
             {contactInfo.map((info, index) => (
               <motion.a
                 key={index}
-                href={getLinkUrl(info.linkKey)}
-                target={info.linkKey ? '_blank' : undefined}
-                rel={info.linkKey ? 'noopener noreferrer' : undefined}
+                href={info.link || '#'}
+                target={info.link?.startsWith('http') ? '_blank' : undefined}
+                rel={info.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ x: 5 }}
                 className={`block p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-red-300 dark:hover:border-red-800 transition-all duration-300 ${
-                  info.linkKey ? 'cursor-pointer' : 'cursor-default'
+                  info.link ? 'cursor-pointer' : 'cursor-default'
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -189,7 +219,7 @@ export default function ContactSection() {
               </motion.a>
             ))}
 
-            {/* Social Links - Dynamic */}
+            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -203,7 +233,7 @@ export default function ContactSection() {
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
-                    href={t(social.urlKey as any)}
+                    href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center justify-between p-4 rounded-xl text-white transition-all duration-300 ${social.color} hover:shadow-lg`}
@@ -246,7 +276,7 @@ export default function ContactSection() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Status Messages - Dynamic */}
+                {/* Status Messages */}
                 {submitStatus === 'success' && (
                   <div className="p-4 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
                     <div className="flex items-center gap-3">
@@ -258,7 +288,7 @@ export default function ContactSection() {
                           {t('successTitle')}
                         </div>
                         <div className="text-sm text-green-700 dark:text-green-400">
-                          {t('successMessage')}
+                          Your email client will open. Please click send to complete.
                         </div>
                       </div>
                     </div>
@@ -276,7 +306,7 @@ export default function ContactSection() {
                           {t('errorTitle')}
                         </div>
                         <div className="text-sm text-red-700 dark:text-red-400">
-                          {t('errorMessage')}
+                          Please fill all required fields (Name, Email, Message)
                         </div>
                       </div>
                     </div>
@@ -288,7 +318,7 @@ export default function ContactSection() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       <span className="flex items-center gap-2">
                         <User className="w-4 h-4" />
-                        {t('name')}
+                        {t('name')} <span className="text-red-500">*</span>
                       </span>
                     </label>
                     <input
@@ -304,7 +334,7 @@ export default function ContactSection() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      {t('email')}
+                      {t('email')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="email"
@@ -341,7 +371,6 @@ export default function ContactSection() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
                     >
                       <option value="">{t('selectSubject')}</option>
@@ -356,7 +385,7 @@ export default function ContactSection() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    {t('message')}
+                    {t('message')} <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     name="message"
@@ -378,26 +407,20 @@ export default function ContactSection() {
                       : 'bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 shadow-lg hover:shadow-xl hover:shadow-red-500/20'
                   }`}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      {t('sending')}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      {t('sendButton')}
-                    </>
-                  )}
+                  <Send className="w-5 h-5" />
+                  {t('sendButton')}
                 </button>
 
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center pt-4">
                   {t('privacyNotice')}
                 </p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
+                  This will open your email client (Gmail, Outlook, etc.). Please click send to complete.
+                </p>
               </form>
             </motion.div>
 
-            {/* Additional Info - Dynamic */}
+            {/* Additional Info */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -406,7 +429,7 @@ export default function ContactSection() {
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-xl bg-blue-500/10">
-                  <GlobeIcon className="w-6 h-6 text-blue-500" />
+                  <Globe className="w-6 h-6 text-blue-500" />
                 </div>
                 <div>
                   <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
