@@ -16,21 +16,21 @@ export default function Footer() {
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
-  // Dynamic social links with BETTER CONTRAST (darker colors)
+  // Social links with consistent classes
   const socialLinks = [
     { 
       name: t('telegram'), 
       url: common('telegramLink') || 'https://t.me/eastfront_pk',
       icon: Send,
-      color: 'bg-blue-700 hover:bg-blue-800 text-white',
-      ariaLabel: 'Telegram channel - opens in new tab'
+      color: 'bg-blue-600 hover:bg-blue-700',
+      ariaLabel: 'Telegram channel'
     },
     { 
       name: t('whatsapp'), 
       url: common('whatsappLink') || 'https://wa.me/+923412786433',
       icon: MessageCircle,
-      color: 'bg-green-700 hover:bg-green-800 text-white',
-      ariaLabel: 'WhatsApp contact - opens in new tab'
+      color: 'bg-green-600 hover:bg-green-700',
+      ariaLabel: 'WhatsApp contact'
     }
   ];
 
@@ -74,7 +74,7 @@ export default function Footer() {
                   aria-label={social.ariaLabel}
                 >
                   <social.icon className="w-4 h-4" aria-hidden="true" />
-                  <span className="text-sm font-medium">{social.name}</span>
+                  <span className="text-sm">{social.name}</span>
                 </a>
               ))}
             </div>
@@ -164,7 +164,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-gray-400 hover:text-white transition-colors"
-              aria-label="Made by Communities.pk - opens in new tab"
+              aria-label="Made by Communities.pk"
             >
               {t('madeBy')}
             </a>

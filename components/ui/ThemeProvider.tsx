@@ -96,22 +96,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(newTheme);
   };
 
-  // Prevent hydration mismatch - render nothing until mounted
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={{ theme: 'light', toggleTheme, setTheme }}>
-        <div className="min-h-screen" style={{ visibility: 'hidden' }}>
-          {children}
-        </div>
-      </ThemeContext.Provider>
-    );
-  }
-
+  // IMPORTANT: Return same structure on server and client - NO conditional div
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      <div className="min-h-screen">
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

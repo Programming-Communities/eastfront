@@ -139,6 +139,17 @@ const getPageMetadata = (locale: string, pathname: string = '/') => {
   };
 };
 
+// Helper function to get current path for canonical URL
+async function getCurrentPath(): Promise<string> {
+  try {
+    const headersList = await headers();
+    const pathname = headersList.get('x-pathname') || '';
+    return pathname;
+  } catch {
+    return '';
+  }
+}
+
 // ✅ OPTIMIZED: Dynamic metadata generator with FIXED canonical URL
 export async function generateMetadata({ 
   params 
@@ -147,20 +158,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const metadata = getPageMetadata(locale);
-  
-  // Get the current URL path from headers for proper canonical URL
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || '';
+  const currentPath = await getCurrentPath();
   
   // Build the correct canonical URL based on the actual path
-  let currentUrl = `${baseUrl}/${locale}`;
+  let canonicalUrl = `${baseUrl}/${locale}`;
   
-  // If there's a path after locale, add it to canonical URL
-  if (pathname) {
-    // Extract the part after locale
-    const pathWithoutLocale = pathname.replace(`/${locale}`, '');
-    if (pathWithoutLocale && pathWithoutLocale !== '') {
-      currentUrl = `${baseUrl}/${locale}${pathWithoutLocale}`;
+  // Extract the path after locale
+  if (currentPath) {
+    const pathWithoutLocale = currentPath.replace(`/${locale}`, '');
+    if (pathWithoutLocale && pathWithoutLocale !== '' && pathWithoutLocale !== '/') {
+      canonicalUrl = `${baseUrl}/${locale}${pathWithoutLocale}`;
     }
   }
   
@@ -173,11 +180,10 @@ export async function generateMetadata({
     description: metadata.description,
     keywords: metadata.keywords,
     
-    // ✅ FIXED: Open Graph with correct URL
     openGraph: {
       type: 'website',
       locale: metadata.ogLocale,
-      url: currentUrl,
+      url: canonicalUrl,
       title: metadata.title,
       description: metadata.description,
       siteName: metadata.siteName,
@@ -192,7 +198,6 @@ export async function generateMetadata({
       ],
     },
     
-    // ✅ OPTIMIZED: Twitter Cards
     twitter: {
       card: 'summary_large_image',
       title: metadata.title,
@@ -202,7 +207,6 @@ export async function generateMetadata({
       site: '@eastfront_pk',
     },
     
-    // ✅ OPTIMIZED: Icons with modern formats
     icons: {
       icon: [
         { url: '/favicon.ico' },
@@ -215,7 +219,6 @@ export async function generateMetadata({
       shortcut: ['/favicon.ico'],
     },
     
-    // ✅ FIXED: Robots config
     robots: {
       index: true,
       follow: true,
@@ -228,9 +231,8 @@ export async function generateMetadata({
       },
     },
     
-    // ✅ FIXED: Alternates for multilingual SEO with proper canonical
     alternates: {
-      canonical: currentUrl,
+      canonical: canonicalUrl,
       languages: {
         'en': `${baseUrl}/en`,
         'ur': `${baseUrl}/ur`,
@@ -241,7 +243,6 @@ export async function generateMetadata({
       },
     },
     
-    // ✅ OPTIMIZED: Additional metadata
     authors: [{ name: 'EastFront PK Editorial Team' }],
     publisher: metadata.siteName,
     category: 'Education & Research',
@@ -296,13 +297,11 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-1">
-                {children}
-              </main>
-              <Footer />
-            </div>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
