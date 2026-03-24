@@ -139,13 +139,33 @@ const getPageMetadata = (locale: string, pathname: string = '/') => {
   };
 };
 
-// Helper function to get current path for canonical URL
+// ✅ UPDATED: Helper function to get current path for canonical URL - IMPROVED VERSION
 async function getCurrentPath(): Promise<string> {
   try {
     const headersList = await headers();
+    
+    // Try to get from x-url first (more reliable - contains full URL)
+    const fullUrl = headersList.get('x-url') || '';
+    if (fullUrl) {
+      try {
+        const urlObj = new URL(fullUrl);
+        return urlObj.pathname;
+      } catch {
+        // If URL parsing fails, fallback to x-pathname
+        return headersList.get('x-pathname') || '';
+      }
+    }
+    
+    // Fallback to x-pathname
     const pathname = headersList.get('x-pathname') || '';
-    return pathname;
-  } catch {
+    if (pathname) {
+      return pathname;
+    }
+    
+    // Final fallback
+    return '';
+  } catch (error) {
+    console.error('Error getting current path:', error);
     return '';
   }
 }
@@ -165,6 +185,7 @@ export async function generateMetadata({
   
   // Extract the path after locale
   if (currentPath) {
+    // Remove the locale prefix to get the actual page path
     const pathWithoutLocale = currentPath.replace(`/${locale}`, '');
     if (pathWithoutLocale && pathWithoutLocale !== '' && pathWithoutLocale !== '/') {
       canonicalUrl = `${baseUrl}/${locale}${pathWithoutLocale}`;

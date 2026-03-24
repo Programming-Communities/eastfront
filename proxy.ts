@@ -12,6 +12,7 @@ const intlMiddleware = createMiddleware({
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const fullUrl = request.url;  // ✅ ADD THIS
   
   // Skip proxy for static files and API routes
   if (
@@ -22,6 +23,7 @@ export async function proxy(request: NextRequest) {
   ) {
     const response = NextResponse.next();
     response.headers.set('x-pathname', pathname);
+    response.headers.set('x-url', fullUrl);  // ✅ ADD THIS
     return response;
   }
   
@@ -31,11 +33,13 @@ export async function proxy(request: NextRequest) {
   if (!response) {
     const fallbackResponse = NextResponse.next();
     fallbackResponse.headers.set('x-pathname', pathname);
+    fallbackResponse.headers.set('x-url', fullUrl);  // ✅ ADD THIS
     return fallbackResponse;
   }
   
-  // Add pathname to headers for metadata access
+  // Add pathname and URL to headers for metadata access
   response.headers.set('x-pathname', pathname);
+  response.headers.set('x-url', fullUrl);  // ✅ ADD THIS
   
   // Add security headers
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');

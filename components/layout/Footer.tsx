@@ -13,7 +13,7 @@ export default function Footer() {
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
 
-  // Social links with consistent classes
+  // Social links with consistent classes (no theme dependency)
   const socialLinks = [
     { 
       name: t('telegram'), 
