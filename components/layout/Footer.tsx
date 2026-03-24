@@ -4,13 +4,11 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MapPin, Phone, Mail, ExternalLink, Send, MessageCircle, Heart } from 'lucide-react';
-import { useTheme } from '@/components/ui/ThemeProvider';
 
 export default function Footer() {
   const t = useTranslations('Footer');
   const common = useTranslations('Common');
   const pathname = usePathname();
-  const { theme } = useTheme();
   
   const currentLocale = pathname?.split('/')[1] || 'ur';
   const currentYear = new Date().getFullYear();
@@ -21,14 +19,14 @@ export default function Footer() {
       name: t('telegram'), 
       url: common('telegramLink') || 'https://t.me/eastfront_pk',
       icon: Send,
-      color: 'bg-blue-700 hover:bg-blue-800 text-white',
+      color: 'bg-blue-700 hover:bg-blue-800 dark:bg-blue-800 dark:hover:bg-blue-900 text-white',
       ariaLabel: 'Telegram channel'
     },
     { 
       name: t('whatsapp'), 
       url: common('whatsappLink') || 'https://wa.me/+923412786433',
       icon: MessageCircle,
-      color: 'bg-green-700 hover:bg-green-800 text-white',
+      color: 'bg-green-700 hover:bg-green-800 dark:bg-green-800 dark:hover:bg-green-900 text-white',
       ariaLabel: 'WhatsApp contact'
     }
   ];
@@ -51,13 +49,13 @@ export default function Footer() {
     : common('visionEnglish') || t('defaultVision');
 
   return (
-    <footer className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-gray-900 text-white'} transition-colors duration-200`}>
+    <footer className="bg-gray-900 dark:bg-black text-white transition-colors duration-200">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
             <h2 className="text-xl font-bold mb-4 text-white">{common('title')}</h2>
-            <p className="text-gray-200 dark:text-gray-200 mb-4 leading-relaxed">
+            <p className="text-gray-300 dark:text-gray-300 mb-4 leading-relaxed">
               {common('description') || t('defaultDescription')}
             </p>
             <div className="flex space-x-4">
@@ -85,7 +83,7 @@ export default function Footer() {
                 <li key={link.key}>
                   <Link 
                     href={link.href}
-                    className="text-gray-200 dark:text-gray-200 hover:text-white transition-colors duration-200 flex items-center"
+                    className="text-gray-300 dark:text-gray-300 hover:text-white transition-colors duration-200 flex items-center"
                     aria-label={`Go to ${link.name}`}
                   >
                     <span>{link.name}</span>
@@ -105,10 +103,10 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-red-400 mt-1 shrink-0" aria-hidden="true" />
                 <div>
-                  <p className="text-gray-200 dark:text-gray-200 text-sm">
+                  <p className="text-gray-300 dark:text-gray-300 text-sm">
                     {common('addressUrdu')}
                   </p>
-                  <p className="text-gray-200 dark:text-gray-200 text-sm">
+                  <p className="text-gray-300 dark:text-gray-300 text-sm">
                     {common('addressEnglish')}
                   </p>
                 </div>
@@ -118,7 +116,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`tel:${common('phone')}`}
-                  className="text-gray-200 dark:text-gray-200 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 dark:text-gray-300 hover:text-white transition-colors duration-200"
                   aria-label={`Call ${common('phone')}`}
                 >
                   {common('phone')}
@@ -129,7 +127,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
                 <a 
                   href={`mailto:${common('email')}`}
-                  className="text-gray-200 dark:text-gray-200 hover:text-white transition-colors duration-200"
+                  className="text-gray-300 dark:text-gray-300 hover:text-white transition-colors duration-200"
                   aria-label={`Email ${common('email')}`}
                 >
                   {common('email')}
@@ -141,19 +139,19 @@ export default function Footer() {
           {/* Mission & Vision */}
           <div>
             <h3 className="text-lg font-bold mb-4 text-white">{t('mission')}</h3>
-            <p className={`text-gray-200 dark:text-gray-200 mb-4 leading-relaxed ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <p className={`text-gray-300 dark:text-gray-300 mb-4 leading-relaxed ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {missionText}
             </p>
             <h3 className="text-lg font-bold mb-4 text-white">{t('vision')}</h3>
-            <p className={`text-gray-200 dark:text-gray-200 leading-relaxed ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
+            <p className={`text-gray-300 dark:text-gray-300 leading-relaxed ${currentLocale === 'ur' ? 'font-urdu' : ''}`}>
               {visionText}
             </p>
           </div>
         </div>
 
-        {/* Copyright - Fixed contrast */}
-        <div className="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-300 dark:text-gray-300 mb-3">
+        {/* Copyright */}
+        <div className="border-t border-gray-800 dark:border-gray-800 mt-8 pt-8 text-center">
+          <p className="text-gray-400 dark:text-gray-400 mb-3">
             {t('copyright', { year: currentYear })}
           </p>
           <div className="flex items-center justify-center space-x-2">
@@ -162,8 +160,8 @@ export default function Footer() {
               href="https://www.communities.pk/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 dark:text-gray-300 hover:text-white transition-colors text-sm font-medium"
-              aria-label="Made by Communities.pk - opens in new tab"
+              className="text-gray-400 dark:text-gray-400 hover:text-white transition-colors text-sm"
+              aria-label="Made by Communities.pk"
             >
               {t('madeBy')}
             </a>
