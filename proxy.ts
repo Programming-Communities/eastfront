@@ -12,7 +12,7 @@ const intlMiddleware = createMiddleware({
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const fullUrl = request.url;  // ✅ ADD THIS
+  const fullUrl = request.url;  // ✅ ADD THIS LINE
   
   // Skip proxy for static files and API routes
   if (
